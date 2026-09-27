@@ -30,7 +30,7 @@ export default function Navbar() {
             <Atom size={18} strokeWidth={2.5} />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-ink-0">
-            Antibiotic Atlas
+            Antimicrobial Atlas
           </span>
         </Link>
 

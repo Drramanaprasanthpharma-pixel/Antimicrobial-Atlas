@@ -4,9 +4,9 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Antibiotic Atlas",
+  title: "Antimicrobial Atlas",
   description:
-    "Explore antibiotics and understand their science — classification, mechanism, spectrum, dosing and stewardship, in one reference.",
+    "Evidence-based antimicrobial knowledge for healthcare professionals — agents, pathogens, spectrum, dosing and stewardship in one reference.",
 };
 
 export default function RootLayout({

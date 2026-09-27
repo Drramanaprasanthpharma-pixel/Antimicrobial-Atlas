@@ -1,4 +1,4 @@
-// Shared types for Antibiotic Atlas.
+// Shared types for Antimicrobial Atlas.
 // Field set is designed to map 1:1 onto a future Firestore "antibiotics" collection.
 
 export interface DosingRegimen {
