@@ -12,11 +12,15 @@ export default function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6 pt-10 sm:pt-14 pb-6">
-      {eyebrow && <p className="text-sm text-red font-bold mb-1.5">{eyebrow}</p>}
-      <h1 className="text-3xl sm:text-4xl font-bold text-ink-0 max-w-2xl">{title}</h1>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-8">
+      {eyebrow && <p className="text-sm text-teal font-medium mb-2">{eyebrow}</p>}
+      <h1 className="font-display text-3xl sm:text-4xl font-semibold text-ink-0 max-w-2xl">
+        {title}
+      </h1>
       {description && (
-        <p className="text-ink-1 mt-3 max-w-2xl text-base leading-relaxed">{description}</p>
+        <p className="text-ink-1 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
+          {description}
+        </p>
       )}
       {children && <div className="mt-6">{children}</div>}
     </div>

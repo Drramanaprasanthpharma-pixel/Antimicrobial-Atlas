@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchBar({
-  placeholder = "Search antimicrobial agent or drug\u2026",
+  placeholder = "Search antibiotics, classes or organisms\u2026",
   onSearch,
   large = false,
 }: {
@@ -20,9 +20,9 @@ export default function SearchBar({
         e.preventDefault();
         onSearch?.(value);
       }}
-      className={`search-field flex items-center gap-3 rounded-md px-4 ${large ? "py-3.5" : "py-2.5"} w-full`}
+      className={`search-glow flex items-center gap-3 px-4 ${large ? "py-4" : "py-2.5"} w-full`}
     >
-      <Search className="text-red shrink-0" size={large ? 20 : 17} />
+      <Search className="text-teal shrink-0" size={large ? 22 : 18} />
       <input
         value={value}
         onChange={(e) => {

@@ -4,9 +4,9 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Antimicrobial Atlas — Antimicrobial Agents",
+  title: "Antimicrobial Atlas",
   description:
-    "A classification reference for antimicrobial agents: class/mechanism, drugs, spectrum of activity and mechanism of resistance.",
+    "Evidence-based antimicrobial knowledge for healthcare professionals — agents, pathogens, spectrum, dosing and stewardship in one reference.",
 };
 
 export default function RootLayout({
@@ -16,7 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased flex min-h-screen flex-col bg-paper text-ink-0">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased flex min-h-screen flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
