@@ -31,6 +31,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink-1">
           <Link href="/antibiotics" className="hover:text-teal transition-colors">Antibiotics</Link>
+          <Link href="/agents" className="hover:text-teal transition-colors">Agents</Link>
           <Link href="/classes" className="hover:text-teal transition-colors">Classes</Link>
           <Link href="/spectrum" className="hover:text-teal transition-colors">Spectrum</Link>
           <Link href="/ams" className="hover:text-teal transition-colors">AMS</Link>

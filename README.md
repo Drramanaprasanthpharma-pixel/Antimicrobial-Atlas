@@ -116,6 +116,36 @@ viewports.
 - **Antibiotic profiles, dosing, and PK/PD values** in `lib/data/antibiotics.ts` are demo
   / placeholder content for interface scaffolding \u2014 not verified clinical guidance.
   Anything intended to go live needs review and replacement by a qualified source.
+- **The `/agents` classification browser** (`lib/data/agents.ts`) is transcribed directly
+  from a supplied textbook table (classification of antimicrobial agents \u2014
+  class/mechanism, drugs, spectrum of activity, mechanism of resistance). No dosing,
+  PK/PD, interactions, adverse effects or clinical recommendations were added \u2014 only
+  what appeared in the source table. Where a table cell was illegible in the source
+  photo, the value is the literal string `"[TEXT UNCLEAR]"` rather than a guess; where a
+  cell was genuinely blank in the source, the UI shows "Not stated in source."
+
+## `/agents` \u2014 Antimicrobial Agents classification browser
+
+A new, separate section (does not modify the existing `/classes` or `/antibiotics`
+pages or their data):
+
+- `lib/data/agents.ts` \u2014 typed, book-faithful data: `MajorSection` (book sections A\u2013F)
+  \u2192 `ClassGroup` (e.g. \u03b2-Lactam Antibiotics) \u2192 `Subclass` (e.g. Penicillins,
+  Cephalosporins) \u2192 `DrugVariant` (drugs + spectrum of activity, with an optional
+  label for book sub-rows like "1st generation"). Each `Subclass` also carries its own
+  `mechanismOfResistance` list, matching the book's table exactly.
+- `components/agents/AgentsExplorer.tsx` \u2014 client component rendering the three-level
+  expand/collapse tree (Section \u2192 Class \u2192 Subclass \u2192 drugs / spectrum /
+  resistance), with a live search box that filters by drug name, class name, or any
+  visible text and auto-expands matches. Touch-friendly tap targets throughout.
+- `components/agents/GlossaryPanel.tsx` \u2014 renders the abbreviation footnote from the
+  source table (MSSA, MRSA, CA-MRSA, ESBL, VRE).
+- `app/agents/page.tsx` \u2014 the route itself, reusing the existing `PageHeader` and
+  `Alert` components and the site's glass-card design system.
+
+Swapping this for Firestore later: replace the `antimicrobialAgents` array in
+`lib/data/agents.ts` with a fetch of a collection shaped the same way (`MajorSection[]`)
+\u2014 `AgentsExplorer` only needs that shape as a prop, so no component changes required.
 
 ## Data model
 
