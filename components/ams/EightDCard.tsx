@@ -9,9 +9,7 @@ export default function EightDCard({ item }: { item: EightD }) {
 
   return (
     <div
-      className={`glass-soft rounded-2xl overflow-hidden transition-colors ${
-        open ? "border-line-strong" : ""
-      }`}
+      className={`glass-card overflow-hidden ${open ? "border-line-strong" : ""}`}
     >
       <button
         type="button"

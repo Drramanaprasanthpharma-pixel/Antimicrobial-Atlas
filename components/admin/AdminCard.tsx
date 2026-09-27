@@ -13,7 +13,7 @@ export default function AdminCard({
   stat?: string;
 }) {
   return (
-    <div className="glass-soft rounded-2xl p-5 flex flex-col gap-3">
+    <div className="glass-card-static p-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-panel-2 text-teal">
           {icon}

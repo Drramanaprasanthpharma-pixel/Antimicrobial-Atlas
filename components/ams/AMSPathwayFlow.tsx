@@ -11,7 +11,7 @@ export default function AMSPathwayFlow() {
       <ol className="relative flex flex-col items-center gap-2">
         {amsPathway.map((step, i) => (
           <li key={step} className="relative flex flex-col items-center w-full">
-            <div className="glass-soft rounded-xl px-5 py-3 text-center w-full max-w-xs">
+            <div className="glass-card-static px-5 py-3 text-center w-full max-w-xs">
               <span className="font-data text-[11px] text-ink-2">{String(i + 1).padStart(2, "0")}</span>
               <p className="text-sm font-medium text-ink-0 mt-0.5">{step}</p>
             </div>

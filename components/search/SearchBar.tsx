@@ -20,7 +20,7 @@ export default function SearchBar({
         e.preventDefault();
         onSearch?.(value);
       }}
-      className={`glass flex items-center gap-3 rounded-xl px-4 ${large ? "py-4" : "py-2.5"} w-full`}
+      className={`search-glow flex items-center gap-3 px-4 ${large ? "py-4" : "py-2.5"} w-full`}
     >
       <Search className="text-teal shrink-0" size={large ? 22 : 18} />
       <input

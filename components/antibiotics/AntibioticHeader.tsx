@@ -3,7 +3,7 @@ import { FlaskConical } from "lucide-react";
 
 export default function AntibioticHeader({ antibiotic }: { antibiotic: Antibiotic }) {
   return (
-    <div className="glass rounded-2xl p-6 sm:p-8">
+    <div className="glass-card-static p-6 sm:p-8">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal/20 to-cyan/20 border border-line">
           <FlaskConical className="text-teal" size={22} />

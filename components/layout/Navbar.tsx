@@ -21,12 +21,12 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky z-40 border-b border-line glass"
+      className="sticky z-40 nav-glass"
       style={{ top: 0, paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal to-cyan text-abyss">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal to-cyan text-abyss shadow-[0_0_18px_rgba(45,212,191,0.35)]">
             <Atom size={18} strokeWidth={2.5} />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-ink-0">
@@ -43,7 +43,7 @@ export default function Navbar() {
                 href={link.href}
                 className={`rounded-md px-3 py-2 text-sm transition-colors ${
                   active
-                    ? "text-teal"
+                    ? "text-teal nav-active-indicator"
                     : "text-ink-1 hover:text-ink-0"
                 }`}
               >
@@ -63,7 +63,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <nav className="lg:hidden border-t border-line px-4 py-3 flex flex-col gap-1">
+        <nav className="lg:hidden border-t border-line px-4 py-3 flex flex-col gap-1 animate-fade-in">
           {links.map((link) => (
             <Link
               key={link.href}
