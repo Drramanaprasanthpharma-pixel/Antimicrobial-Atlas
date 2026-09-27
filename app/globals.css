@@ -2,293 +2,150 @@
 
 :root {
   /* Base surfaces */
-  --abyss: #071426;        /* page background */
-  --panel: #0B1F3A;        /* raised panel background */
-  --panel-2: #101f36;      /* secondary panel */
-  --line: rgba(34, 211, 238, 0.18);
-  --line-strong: rgba(34, 211, 238, 0.36);
+  --paper: #ffffff;          /* page background */
+  --panel: #ffffff;          /* card / panel background */
+  --panel-tint: #faf7f7;     /* faint red-tinted panel for nested rows */
+  --surface-muted: #f5f3f1;  /* light gray backgrounds */
+  --line: #e3dedb;           /* hairline borders */
+  --line-strong: #c9403a55;  /* stronger, red-tinted rule */
 
-  /* Glass */
-  --glass-bg: rgba(11, 31, 58, 0.55);
-  --glass-bg-soft: rgba(11, 31, 58, 0.32);
-
-  /* Gradient anchors (blue-violet) */
-  --gradient-from: #172554;
-  --gradient-to: #312E81;
-
-  /* Accents — brighter bio-tech palette */
-  --cyan: #22D3EE;
-  --teal: #2DD4BF;
-  --blue: #38BDF8;
-  --violet: #8B5CF6;
-  --emerald: #34D399;
-  --amber: #FBBF24;    /* warnings / resistance markers */
-  --rose: #FB7185;     /* contraindications / critical (coral) */
-
-  /* Category accents */
-  --accent-antibiotics: var(--cyan);
-  --accent-classes: var(--blue);
-  --accent-spectrum: var(--violet);
-  --accent-ams: var(--teal);
-  --accent-microbiology: var(--emerald);
-  --accent-clinical-a: var(--blue);
-  --accent-clinical-b: var(--violet);
-  --accent-resistance: var(--rose);
+  /* Brand */
+  --red: #a3211d;            /* primary accent — deep academic red */
+  --red-dark: #7c1815;       /* hover / pressed */
+  --red-tint: #fbecea;       /* pale red fill for badges/rows */
+  --red-tint-strong: #f5d9d6;
 
   /* Text */
-  --ink-0: #f2f8fb;    /* primary text */
-  --ink-1: #b7cede;    /* secondary text */
-  --ink-2: #7d97a8;    /* muted / tertiary text */
+  --ink-0: #1a1512;          /* primary text — warm near-black */
+  --ink-1: #4a413c;          /* secondary text */
+  --ink-2: #7a6f68;          /* muted / tertiary text */
 }
 
 @theme inline {
-  --color-abyss: var(--abyss);
+  --color-paper: var(--paper);
   --color-panel: var(--panel);
-  --color-panel-2: var(--panel-2);
+  --color-panel-tint: var(--panel-tint);
+  --color-surface-muted: var(--surface-muted);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-  --color-glass: var(--glass-bg);
-  --color-glass-soft: var(--glass-bg-soft);
-  --color-teal: var(--teal);
-  --color-cyan: var(--cyan);
-  --color-blue: var(--blue);
-  --color-violet: var(--violet);
-  --color-emerald: var(--emerald);
-  --color-amber: var(--amber);
-  --color-rose: var(--rose);
+  --color-red: var(--red);
+  --color-red-dark: var(--red-dark);
+  --color-red-tint: var(--red-tint);
+  --color-red-tint-strong: var(--red-tint-strong);
   --color-ink-0: var(--ink-0);
   --color-ink-1: var(--ink-1);
   --color-ink-2: var(--ink-2);
 
-  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-data: "IBM Plex Mono", ui-monospace, monospace;
+  --font-serif: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
 }
 
 html {
   scroll-padding-top: env(safe-area-inset-top, 0px);
 }
 
+* {
+  font-family: var(--font-serif);
+}
+
 body {
-  background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(34, 211, 238, 0.16), transparent 60%),
-    radial-gradient(1000px 700px at 100% 0%, rgba(139, 92, 246, 0.14), transparent 55%),
-    radial-gradient(900px 500px at 45% 100%, rgba(45, 212, 191, 0.10), transparent 60%),
-    linear-gradient(180deg, var(--abyss) 0%, var(--panel) 100%);
-  background-attachment: fixed;
+  background: var(--paper);
   color: var(--ink-0);
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-serif);
   min-height: 100vh;
-}
-
-h1, h2, h3, h4, .font-display {
-  font-family: var(--font-display), system-ui, sans-serif;
-}
-
-.font-data {
-  font-family: var(--font-data), ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Keyboard accessibility */
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--red);
   outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* ---------- Glass surfaces ---------- */
-.glass {
-  background: var(--glass-bg);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.glass-soft {
-  background: var(--glass-bg-soft);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Premium card treatment — apply alongside/replacing existing card classes */
-.glass-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(3, 10, 20, 0.45);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.glass-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: 0 14px 40px rgba(34, 211, 238, 0.18), 0 4px 24px rgba(3, 10, 20, 0.5);
-}
-
-/* Same surface as .glass-card, without the hover-lift — for static/reading panels
-   rather than clickable cards (detail pages shouldn't bounce as you scroll past them). */
-.glass-card-static {
-  background: var(--glass-bg);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(3, 10, 20, 0.45);
-}
-
-/* ---------- Category accent bars (top border on cards) ---------- */
-.accent-bar { height: 3px; border-radius: 20px 20px 0 0; }
-.accent-bar-antibiotics { background: var(--accent-antibiotics); }
-.accent-bar-classes { background: var(--accent-classes); }
-.accent-bar-spectrum { background: var(--accent-spectrum); }
-.accent-bar-ams { background: var(--accent-ams); }
-.accent-bar-microbiology { background: var(--accent-microbiology); }
-.accent-bar-clinical { background: linear-gradient(90deg, var(--accent-clinical-a), var(--accent-clinical-b)); }
-.accent-bar-resistance { background: var(--accent-resistance); }
-
-/* ---------- Buttons ---------- */
-.btn-gradient-cyan {
-  background: linear-gradient(135deg, var(--cyan), var(--blue));
-  color: #04121f;
-  font-weight: 600;
-  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.28);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-.btn-gradient-cyan:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
-  filter: brightness(1.05);
-}
-.btn-gradient-teal {
-  background: linear-gradient(135deg, var(--teal), var(--cyan));
-  color: #04121f;
-  font-weight: 600;
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.28);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-.btn-gradient-teal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.4);
-  filter: brightness(1.05);
-}
-
-.btn-ghost {
-  background: var(--glass-bg-soft);
-  border: 1px solid var(--line);
-  color: var(--ink-0);
-  font-weight: 600;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-.btn-ghost:hover {
-  transform: translateY(-2px);
-  border-color: var(--line-strong);
-  background: var(--glass-bg);
-}
-
-/* ---------- Search bar ---------- */
-.search-glow {
-  position: relative;
-  border-radius: 9999px;
-  background: var(--glass-bg);
-  border: 1px solid var(--line-strong);
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.12), 0 8px 32px rgba(34, 211, 238, 0.14);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.search-glow:focus-within {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 0 44px rgba(34, 211, 238, 0.38),
-    0 8px 32px rgba(34, 211, 238, 0.22);
-}
-
-/* ---------- Navigation ---------- */
-.nav-glass {
-  background: rgba(7, 20, 38, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--line);
-}
-.nav-active-indicator {
-  position: relative;
-}
-.nav-active-indicator::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
-  height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--teal));
 }
 
-/* ---------- Gradient text ---------- */
-.gradient-text {
-  background: linear-gradient(90deg, var(--cyan), var(--teal), var(--violet));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 8s ease-in-out infinite;
+/* ---------- Rule / divider ---------- */
+.rule-red {
+  height: 3px;
+  background: var(--red);
+}
+.rule-hair {
+  height: 1px;
+  background: var(--line);
 }
 
-/* ---------- Ambient light orbs ---------- */
-.bg-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(90px);
-  pointer-events: none;
-  opacity: 0.35;
+/* ---------- Panels / cards ---------- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
-.bg-orb-cyan { background: var(--cyan); }
-.bg-orb-violet { background: var(--violet); }
-.bg-orb-teal { background: var(--teal); }
-
-/* Subtle molecular/dot-grid backdrop for scientific sections */
-.molecular-backdrop {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.55;
-  background-image: radial-gradient(circle, rgba(34, 211, 238, 0.22) 1px, transparent 1.5px);
-  background-size: 28px 28px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 40%, transparent 85%);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 40%, transparent 85%);
+.panel-tint {
+  background: var(--panel-tint);
+  border: 1px solid var(--line);
 }
 
-/* ---------- Molecular node glow (for the network visualization) ---------- */
-.node-glow {
-  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.55));
+/* ---------- Accordion controls ---------- */
+.disclosure-trigger {
+  transition: background-color 0.15s ease;
+}
+.disclosure-trigger:hover {
+  background-color: var(--surface-muted);
+}
+.disclosure-icon {
+  transition: transform 0.2s ease;
+}
+.disclosure-icon.is-open {
+  transform: rotate(180deg);
 }
 
-/* ---------- Animations ---------- */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ---------- Buttons / links ---------- */
+.link-red {
+  color: var(--red);
+  text-decoration-color: var(--red-tint-strong);
+  text-underline-offset: 3px;
 }
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 18px rgba(34, 211, 238, 0.25); }
-  50% { box-shadow: 0 0 32px rgba(34, 211, 238, 0.45); }
+.link-red:hover {
+  color: var(--red-dark);
+  text-decoration-line: underline;
 }
 
-.animate-fade-in { animation: fadeInUp 0.6s ease-out both; }
-.animate-float { animation: floatY 6s ease-in-out infinite; }
-.animate-float-delay { animation: floatY 7s ease-in-out infinite; animation-delay: 1.2s; }
-.animate-glow-pulse { animation: glowPulse 3s ease-in-out infinite; }
+/* ---------- Search ---------- */
+.search-field {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search-field:focus-within {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-tint);
+}
+
+/* ---------- Reference table ---------- */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.ref-table th {
+  background: var(--red);
+  color: #ffffff;
+  font-weight: 700;
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--red-dark);
+  letter-spacing: 0.01em;
+}
+.ref-table td {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.55;
+  color: var(--ink-0);
+}
+.ref-table tbody tr:nth-child(even) {
+  background: var(--panel-tint);
+}
 
 .thin-scroll::-webkit-scrollbar {
   height: 8px;
-  width: 8px;
 }
 .thin-scroll::-webkit-scrollbar-thumb {
   background: var(--line-strong);
