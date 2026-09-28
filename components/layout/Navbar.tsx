@@ -9,11 +9,8 @@ const links = [
   { href: "/antibiotics", label: "Antibiotics" },
   { href: "/agents", label: "Agents" },
   { href: "/classes", label: "Classes" },
-  { href: "/spectrum", label: "Spectrum" },
-  { href: "/ams", label: "AMS" },
   { href: "/microbiology", label: "Microbiology" },
   { href: "/resistance", label: "Resistance" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export default function Navbar() {
@@ -70,7 +67,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2.5 text-sm text-ink-1 hover:bg-white/8 hover:text-ink-0"
+              className="rounded-md px-3 py-2.5 text-sm text-ink-1 hover:bg-black/5 hover:text-ink-0"
             >
               {link.label}
             </Link>

@@ -28,13 +28,13 @@ export default function AntibioticsPage() {
         description="Browse the demo antibiotic set. Search by name, class or spectrum keyword."
       >
         <div className="max-w-xl">
-          <SearchBar onSearch={setQuery} placeholder="Search antibiotics\u2026" />
+          <SearchBar onSearch={setQuery} placeholder="Search antibiotics…" />
         </div>
       </PageHeader>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20">
         {filtered.length === 0 ? (
-          <p className="text-ink-2 text-sm">No antibiotics match \u201c{query}\u201d.</p>
+          <p className="text-ink-2 text-sm">No antibiotics match “{query}”.</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((a) => (

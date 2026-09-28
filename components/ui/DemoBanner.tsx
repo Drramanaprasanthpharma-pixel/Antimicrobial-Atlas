@@ -5,7 +5,7 @@ export default function DemoBanner({ text }: { text?: string }) {
   return (
     <Alert tone="warning" icon={<Info size={15} />}>
       {text ??
-        "Demo / placeholder content for interface scaffolding only \u2014 not a verified clinical recommendation."}
+        "Demo / placeholder content for interface scaffolding only — not a verified clinical recommendation."}
     </Alert>
   );
 }

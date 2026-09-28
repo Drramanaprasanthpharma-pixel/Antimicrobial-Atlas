@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchBar({
-  placeholder = "Search antibiotics, classes or organisms\u2026",
+  placeholder = "Search antibiotics, classes or organisms…",
   onSearch,
   large = false,
 }: {

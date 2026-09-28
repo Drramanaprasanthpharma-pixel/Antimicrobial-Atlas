@@ -11,7 +11,7 @@ export default function AntibioticHeader({ antibiotic }: { antibiotic: Antibioti
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-wide text-teal font-medium">
             {antibiotic.class}
-            {antibiotic.subclass ? ` \u00b7 ${antibiotic.subclass}` : ""}
+            {antibiotic.subclass ? ` · ${antibiotic.subclass}` : ""}
           </p>
           <h1 className="font-display text-2xl sm:text-3xl font-semibold text-ink-0 mt-1">
             {antibiotic.genericName}

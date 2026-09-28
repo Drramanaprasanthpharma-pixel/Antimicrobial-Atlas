@@ -33,7 +33,7 @@ export default async function AntibioticDetailPage({
         <ArrowLeft size={14} /> Back to antibiotics
       </Link>
 
-      <DemoBanner text="This entire profile is demo / placeholder content for interface scaffolding \u2014 not a verified clinical recommendation." />
+      <DemoBanner text="This entire profile is demo / placeholder content for interface scaffolding — not a verified clinical recommendation." />
 
       <AntibioticHeader antibiotic={antibiotic} />
 
@@ -49,7 +49,7 @@ export default async function AntibioticDetailPage({
               key={s.organism}
               className="text-xs rounded-full border border-line px-3 py-1 text-ink-1"
             >
-              {s.organism} \u2014 {susceptibilityLabel[s.susceptibility]}
+              {s.organism} — {susceptibilityLabel[s.susceptibility]}
             </span>
           ))}
         </div>
@@ -69,7 +69,7 @@ export default async function AntibioticDetailPage({
             <div key={i} className="rounded-xl border border-line px-4 py-3">
               <p className="text-ink-0 font-medium text-sm">{d.indication}</p>
               <p className="font-data text-sm text-teal mt-1">
-                {d.dose} \u00b7 {d.route} \u00b7 {d.frequency}
+                {d.dose} · {d.route} · {d.frequency}
               </p>
               {d.notes && <p className="text-xs text-ink-2 mt-1">{d.notes}</p>}
             </div>

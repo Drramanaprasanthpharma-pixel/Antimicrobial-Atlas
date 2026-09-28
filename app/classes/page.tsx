@@ -8,7 +8,7 @@ export default function ClassesPage() {
       <PageHeader
         eyebrow="Reference"
         title="Antibiotic classes"
-        description="Grouped by mechanism family \u2014 penicillins through oxazolidinones."
+        description="Grouped by mechanism family — penicillins through oxazolidinones."
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {classes.map((c) => (

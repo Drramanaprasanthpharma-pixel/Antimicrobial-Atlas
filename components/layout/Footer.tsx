@@ -33,11 +33,8 @@ export default function Footer() {
           <Link href="/antibiotics" className="hover:text-teal transition-colors">Antibiotics</Link>
           <Link href="/agents" className="hover:text-teal transition-colors">Agents</Link>
           <Link href="/classes" className="hover:text-teal transition-colors">Classes</Link>
-          <Link href="/spectrum" className="hover:text-teal transition-colors">Spectrum</Link>
-          <Link href="/ams" className="hover:text-teal transition-colors">AMS</Link>
           <Link href="/microbiology" className="hover:text-teal transition-colors">Microbiology</Link>
           <Link href="/resistance" className="hover:text-teal transition-colors">Resistance</Link>
-          <Link href="/admin" className="hover:text-teal transition-colors">Admin</Link>
         </div>
       </div>
     </footer>

@@ -34,11 +34,11 @@ export default function Home() {
               knowledge, organized.
             </h1>
             <p className="text-ink-1 mt-5 max-w-lg text-base leading-relaxed">
-              A structured reference for antimicrobial agents, pathogens and stewardship \u2014
+              A structured reference for antimicrobial agents, pathogens and stewardship —
               built for clinical pharmacists, physicians, microbiologists and students.
             </p>
             <div className="mt-8 max-w-xl">
-              <SearchBar large placeholder="Search an antibiotic, pathogen, infection, or clinical topic\u2026" />
+              <SearchBar large placeholder="Search an antibiotic, pathogen, infection, or clinical topic…" />
             </div>
             <div className="flex flex-wrap gap-2 mt-4">
               {popular.map((a) => (
@@ -72,7 +72,7 @@ export default function Home() {
             </h2>
             <p className="text-ink-1 mt-4 text-sm sm:text-base leading-relaxed">
               Antimicrobial stewardship (AMS) is an interprofessional effort focused on
-              timely, appropriate antimicrobial use \u2014 improving outcomes for the
+              timely, appropriate antimicrobial use — improving outcomes for the
               individual patient while protecting the effectiveness of these drugs for
               everyone else.
             </p>
@@ -154,24 +154,18 @@ export default function Home() {
       {/* Empirical therapy teaser */}
       <section className="border-t border-line">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-          <Link
-            href="/ams#empirical-therapy"
-            className="group glass rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:justify-between"
-          >
+          <div className="glass rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-wide text-emerald font-medium mb-1.5">Stewardship</p>
               <h2 className="font-display text-xl sm:text-2xl font-semibold text-ink-0">
                 Empirical antimicrobial therapy
               </h2>
               <p className="text-ink-1 text-sm mt-2 max-w-xl">
-                Selecting a starting regimen before culture results return \u2014 through to
+                Selecting a starting regimen before culture results return — through to
                 de-escalation, IV-to-oral switch, dose and duration optimization.
               </p>
             </div>
-            <span className="flex items-center gap-1.5 text-sm text-teal shrink-0 group-hover:gap-2.5 transition-all">
-              Open AMS guide <ArrowRight size={16} />
-            </span>
-          </Link>
+          </div>
         </div>
       </section>
 
