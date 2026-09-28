@@ -1,44 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  /* Base surfaces */
-  --abyss: #071426;        /* page background */
-  --panel: #0B1F3A;        /* raised panel background */
-  --panel-2: #101f36;      /* secondary panel */
-  --line: rgba(34, 211, 238, 0.18);
-  --line-strong: rgba(34, 211, 238, 0.36);
+  /* ---------- Base surfaces ---------- */
+  /* Primary background: near-black clinical void */
+  --abyss: #08080a;
+  --panel: #0d0d0f;        /* fallback dark panel (unscoped contexts) */
+  --panel-2: #131316;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.30);
 
-  /* Glass */
-  --glass-bg: rgba(11, 31, 58, 0.55);
-  --glass-bg-soft: rgba(11, 31, 58, 0.32);
+  /* Glass (default = dark glass, for surfaces sitting directly on the black page,
+     e.g. the search bar). Card-family surfaces below override to light. */
+  --glass-bg: rgba(13, 13, 15, 0.62);
+  --glass-bg-soft: rgba(13, 13, 15, 0.38);
 
-  /* Gradient anchors (blue-violet) */
-  --gradient-from: #172554;
-  --gradient-to: #312E81;
+  /* Gradient anchors — black-to-void, used behind hero sections */
+  --gradient-from: #0a0a0c;
+  --gradient-to: #1a0507;
 
-  /* Accents — brighter bio-tech palette */
-  --cyan: #22D3EE;
-  --teal: #2DD4BF;
-  --blue: #38BDF8;
-  --violet: #8B5CF6;
-  --emerald: #34D399;
-  --amber: #FBBF24;    /* warnings / resistance markers */
-  --rose: #FB7185;     /* contraindications / critical (coral) */
+  /* ---------- Bright clinical red accent family ---------- */
+  --red: #e30016;        /* primary bright clinical red */
+  --red-2: #9c0018;      /* deep maroon-red — secondary accent */
+  --red-3: #ff5468;      /* soft coral-red — tertiary accent, light tint */
+  --red-soft: rgba(227, 0, 22, 0.14);
+
+  /* Legacy accent tokens — remapped into the red/black/white system so every
+     component that already references them (badges, borders, icons, gradients)
+     inherits the new palette with no component-level changes. */
+  --cyan: var(--red-2);
+  --teal: var(--red);
+  --blue: var(--red-2);
+  --violet: var(--red-3);
+  --rose: var(--red);
+
+  /* Kept as distinct, muted semantic colors (warning / success) rather than
+     folded into red, so status meaning (danger vs. caution vs. ok) isn't lost. */
+  --amber: #d98c1f;
+  --emerald: #2f9e63;
 
   /* Category accents */
-  --accent-antibiotics: var(--cyan);
-  --accent-classes: var(--blue);
-  --accent-spectrum: var(--violet);
-  --accent-ams: var(--teal);
+  --accent-antibiotics: var(--red);
+  --accent-classes: var(--red-2);
+  --accent-spectrum: var(--red-3);
+  --accent-ams: var(--red);
   --accent-microbiology: var(--emerald);
-  --accent-clinical-a: var(--blue);
-  --accent-clinical-b: var(--violet);
-  --accent-resistance: var(--rose);
+  --accent-clinical-a: var(--red);
+  --accent-clinical-b: var(--red-2);
+  --accent-resistance: var(--red);
 
-  /* Text */
-  --ink-0: #f2f8fb;    /* primary text */
-  --ink-1: #b7cede;    /* secondary text */
-  --ink-2: #7d97a8;    /* muted / tertiary text */
+  /* Text — default context: directly on the black page background */
+  --ink-0: #f7f7f8;    /* primary text (white on black) */
+  --ink-1: #c6c6cb;    /* secondary text */
+  --ink-2: #8c8c92;    /* muted / tertiary text */
 }
 
 @theme inline {
@@ -56,6 +69,9 @@
   --color-emerald: var(--emerald);
   --color-amber: var(--amber);
   --color-rose: var(--rose);
+  --color-red: var(--red);
+  --color-red-2: var(--red-2);
+  --color-red-3: var(--red-3);
   --color-ink-0: var(--ink-0);
   --color-ink-1: var(--ink-1);
   --color-ink-2: var(--ink-2);
@@ -71,10 +87,25 @@ html {
 
 body {
   background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(34, 211, 238, 0.16), transparent 60%),
-    radial-gradient(1000px 700px at 100% 0%, rgba(139, 92, 246, 0.14), transparent 55%),
-    radial-gradient(900px 500px at 45% 100%, rgba(45, 212, 191, 0.10), transparent 60%),
-    linear-gradient(180deg, var(--abyss) 0%, var(--panel) 100%);
+    /* fine clinical grid, blueprint-style, barely-there */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    radial-gradient(1200px 600px at 15% -10%, rgba(227, 0, 22, 0.20), transparent 60%),
+    radial-gradient(1000px 700px at 100% 0%, rgba(227, 0, 22, 0.10), transparent 55%),
+    radial-gradient(900px 500px at 45% 100%, rgba(255, 255, 255, 0.05), transparent 60%),
+    linear-gradient(180deg, var(--abyss) 0%, #0a0a0c 100%);
   background-attachment: fixed;
   color: var(--ink-0);
   font-family: var(--font-body), system-ui, sans-serif;
@@ -83,6 +114,7 @@ body {
 
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .font-data {
@@ -91,51 +123,74 @@ h1, h2, h3, h4, .font-display {
 
 /* Keyboard accessibility */
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--red);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* ---------- Glass surfaces ---------- */
+/* ---------- Card / panel surfaces ----------
+   These are the site's "secondary background" — rendered as white / very light
+   gray, per the clinical-print aesthetic, with black text. Any component
+   nested inside automatically gets the correct dark-on-light text and border
+   tokens via the scoped custom-property overrides below, with zero changes
+   needed to the components themselves. */
+.surface-light,
+.glass,
+.glass-soft,
+.glass-card,
+.glass-card-static {
+  --ink-0: #0b0b0d;
+  --ink-1: #46464b;
+  --ink-2: #75757b;
+  --line: rgba(0, 0, 0, 0.10);
+  --line-strong: rgba(0, 0, 0, 0.22);
+}
+
+.surface-light {
+  background: var(--panel-2);
+  color: var(--ink-0);
+}
+
 .glass {
-  background: var(--glass-bg);
+  background: #ffffff;
   border: 1px solid var(--line);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  color: var(--ink-0);
 }
 
 .glass-soft {
-  background: var(--glass-bg-soft);
+  background: #fbfbfb;
   border: 1px solid var(--line);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  color: var(--ink-0);
 }
 
 /* Premium card treatment — apply alongside/replacing existing card classes */
 .glass-card {
-  background: var(--glass-bg);
+  background: #ffffff;
   border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(3, 10, 20, 0.45);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 12px 30px rgba(0, 0, 0, 0.35);
+  color: var(--ink-0);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .glass-card:hover {
   transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: 0 14px 40px rgba(34, 211, 238, 0.18), 0 4px 24px rgba(3, 10, 20, 0.5);
+  border-color: var(--red);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 18px 40px rgba(227, 0, 22, 0.22),
+    0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Same surface as .glass-card, without the hover-lift — for static/reading panels
    rather than clickable cards (detail pages shouldn't bounce as you scroll past them). */
 .glass-card-static {
-  background: var(--glass-bg);
+  background: #ffffff;
   border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(3, 10, 20, 0.45);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 12px 30px rgba(0, 0, 0, 0.35);
+  color: var(--ink-0);
 }
 
 /* ---------- Category accent bars (top border on cards) ---------- */
@@ -149,33 +204,23 @@ h1, h2, h3, h4, .font-display {
 .accent-bar-resistance { background: var(--accent-resistance); }
 
 /* ---------- Buttons ---------- */
-.btn-gradient-cyan {
-  background: linear-gradient(135deg, var(--cyan), var(--blue));
-  color: #04121f;
-  font-weight: 600;
-  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.28);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-.btn-gradient-cyan:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
-  filter: brightness(1.05);
-}
+.btn-gradient-cyan,
 .btn-gradient-teal {
-  background: linear-gradient(135deg, var(--teal), var(--cyan));
-  color: #04121f;
+  background: linear-gradient(135deg, var(--red), var(--red-2));
+  color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.28);
+  box-shadow: 0 4px 16px rgba(227, 0, 22, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
+.btn-gradient-cyan:hover,
 .btn-gradient-teal:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.4);
-  filter: brightness(1.05);
+  box-shadow: 0 10px 30px rgba(227, 0, 22, 0.48);
+  filter: brightness(1.06);
 }
 
 .btn-ghost {
-  background: var(--glass-bg-soft);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
   color: var(--ink-0);
   font-weight: 600;
@@ -183,8 +228,21 @@ h1, h2, h3, h4, .font-display {
 }
 .btn-ghost:hover {
   transform: translateY(-2px);
-  border-color: var(--line-strong);
-  background: var(--glass-bg);
+  border-color: var(--red);
+  background: rgba(227, 0, 22, 0.08);
+}
+
+/* Solid white "chrome" button — secondary CTA, black text on white */
+.btn-solid-white {
+  background: #ffffff;
+  color: #0b0b0d;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.btn-solid-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 /* ---------- Search bar ---------- */
@@ -193,18 +251,18 @@ h1, h2, h3, h4, .font-display {
   border-radius: 9999px;
   background: var(--glass-bg);
   border: 1px solid var(--line-strong);
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.12), 0 8px 32px rgba(34, 211, 238, 0.14);
+  box-shadow: 0 0 0 1px rgba(227, 0, 22, 0.14), 0 8px 32px rgba(227, 0, 22, 0.16);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .search-glow:focus-within {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 0 44px rgba(34, 211, 238, 0.38),
-    0 8px 32px rgba(34, 211, 238, 0.22);
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px rgba(227, 0, 22, 0.45), 0 0 44px rgba(227, 0, 22, 0.4),
+    0 8px 32px rgba(227, 0, 22, 0.24);
 }
 
 /* ---------- Navigation ---------- */
 .nav-glass {
-  background: rgba(7, 20, 38, 0.65);
+  background: rgba(5, 5, 6, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
@@ -220,12 +278,12 @@ h1, h2, h3, h4, .font-display {
   bottom: -2px;
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--teal));
+  background: linear-gradient(90deg, var(--red), var(--red-2));
 }
 
 /* ---------- Gradient text ---------- */
 .gradient-text {
-  background: linear-gradient(90deg, var(--cyan), var(--teal), var(--violet));
+  background: linear-gradient(90deg, var(--red), var(--red-3), var(--red));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -241,9 +299,9 @@ h1, h2, h3, h4, .font-display {
   pointer-events: none;
   opacity: 0.35;
 }
-.bg-orb-cyan { background: var(--cyan); }
-.bg-orb-violet { background: var(--violet); }
-.bg-orb-teal { background: var(--teal); }
+.bg-orb-cyan { background: var(--red); }
+.bg-orb-violet { background: var(--red-2); }
+.bg-orb-teal { background: var(--red); }
 
 /* Subtle molecular/dot-grid backdrop for scientific sections */
 .molecular-backdrop {
@@ -251,7 +309,7 @@ h1, h2, h3, h4, .font-display {
   inset: 0;
   pointer-events: none;
   opacity: 0.55;
-  background-image: radial-gradient(circle, rgba(34, 211, 238, 0.22) 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgba(227, 0, 22, 0.24) 1px, transparent 1.5px);
   background-size: 28px 28px;
   -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 40%, transparent 85%);
   mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 40%, transparent 85%);
@@ -259,7 +317,7 @@ h1, h2, h3, h4, .font-display {
 
 /* ---------- Molecular node glow (for the network visualization) ---------- */
 .node-glow {
-  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.55));
+  filter: drop-shadow(0 0 6px rgba(227, 0, 22, 0.6));
 }
 
 /* ---------- Animations ---------- */
@@ -277,8 +335,8 @@ h1, h2, h3, h4, .font-display {
   100% { background-position: 0% 50%; }
 }
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 18px rgba(34, 211, 238, 0.25); }
-  50% { box-shadow: 0 0 32px rgba(34, 211, 238, 0.45); }
+  0%, 100% { box-shadow: 0 0 18px rgba(227, 0, 22, 0.3); }
+  50% { box-shadow: 0 0 32px rgba(227, 0, 22, 0.5); }
 }
 
 .animate-fade-in { animation: fadeInUp 0.6s ease-out both; }

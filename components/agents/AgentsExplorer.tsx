@@ -117,7 +117,7 @@ export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
                               const scOpen = searching || openSubclasses.has(sc.id);
                               const count = drugCount(sc);
                               return (
-                                <div key={sc.id} className="rounded-xl border border-line bg-abyss/40 overflow-hidden">
+                                <div key={sc.id} className="rounded-xl border border-line bg-black/[0.035] overflow-hidden">
                                   <button
                                     type="button"
                                     onClick={() => toggle(openSubclasses, setOpenSubclasses, sc.id)}

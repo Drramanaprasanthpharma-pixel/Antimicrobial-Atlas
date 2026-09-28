@@ -27,7 +27,7 @@ export default function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal to-cyan text-abyss shadow-[0_0_18px_rgba(45,212,191,0.35)]">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-red to-red-2 text-white shadow-[0_0_18px_rgba(227,0,22,0.45)]">
             <Atom size={18} strokeWidth={2.5} />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-ink-0">
@@ -70,7 +70,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2.5 text-sm text-ink-1 hover:bg-panel hover:text-ink-0"
+              className="rounded-md px-3 py-2.5 text-sm text-ink-1 hover:bg-white/8 hover:text-ink-0"
             >
               {link.label}
             </Link>

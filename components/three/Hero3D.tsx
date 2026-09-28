@@ -55,7 +55,7 @@ export default function Hero3D() {
           className="h-56 w-56 rounded-full blur-2xl opacity-60"
           style={{
             background:
-              "radial-gradient(circle, rgba(47,224,194,0.55), rgba(76,201,240,0.25) 55%, transparent 75%)",
+              "radial-gradient(circle, rgba(227,0,22,0.55), rgba(156,0,24,0.25) 55%, transparent 75%)",
           }}
           aria-hidden
         />

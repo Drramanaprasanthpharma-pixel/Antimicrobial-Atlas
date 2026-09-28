@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative mt-24 border-t border-line bg-panel/40"
+      className="relative mt-24 border-t border-line surface-light"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div
@@ -15,7 +15,7 @@ export default function Footer() {
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-3 max-w-md">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-teal to-cyan text-abyss">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red to-red-2 text-white shadow-[0_0_16px_rgba(227,0,22,0.4)]">
             <Atom size={16} strokeWidth={2.5} />
           </span>
           <div>

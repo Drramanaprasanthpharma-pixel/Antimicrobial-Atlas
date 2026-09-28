@@ -15,12 +15,14 @@ function Atom({ position, color, size }: { position: THREE.Vector3; color: strin
   return (
     <mesh position={position}>
       <sphereGeometry args={[size, 20, 20]} />
-      <meshStandardMaterial
+      <meshPhysicalMaterial
         color={color}
-        emissive={color}
-        emissiveIntensity={0.55}
-        roughness={0.25}
-        metalness={0.15}
+        emissive={color === "#ffffff" ? "#000000" : color}
+        emissiveIntensity={0.18}
+        roughness={0.2}
+        metalness={0.25}
+        clearcoat={1}
+        clearcoatRoughness={0.12}
       />
     </mesh>
   );
@@ -68,13 +70,13 @@ function MoleculeGroup({ dense }: { dense: boolean }) {
 
   return (
     <group ref={group}>
-      <Bonds points={ring} color="#2fe0c2" />
+      <Bonds points={ring} color="#e30016" />
       {ring.map((p, i) => (
-        <Atom key={`ring-${i}`} position={p} color={i % 2 === 0 ? "#2fe0c2" : "#4cc9f0"} size={0.18} />
+        <Atom key={`ring-${i}`} position={p} color={i % 2 === 0 ? "#e30016" : "#ffffff"} size={0.18} />
       ))}
       {satellites.map((p, i) => (
         <group key={`sat-${i}`}>
-          <Atom position={p} color="#eef5f8" size={0.1} />
+          <Atom position={p} color="#ffffff" size={0.1} />
           <lineSegments>
             <bufferGeometry>
               <bufferAttribute
@@ -82,7 +84,7 @@ function MoleculeGroup({ dense }: { dense: boolean }) {
                 args={[new Float32Array([0, 0, 0, p.x, p.y, p.z]), 3]}
               />
             </bufferGeometry>
-            <lineBasicMaterial color="#4cc9f0" transparent opacity={0.35} />
+            <lineBasicMaterial color="#9c0018" transparent opacity={0.4} />
           </lineSegments>
         </group>
       ))}
@@ -97,9 +99,9 @@ export default function MoleculeScene({ dense = true }: { dense?: boolean }) {
       camera={{ position: [0, 1.4, 5], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
     >
-      <ambientLight intensity={0.6} />
-      <pointLight position={[4, 4, 4]} intensity={40} color="#4cc9f0" />
-      <pointLight position={[-4, -2, -3]} intensity={20} color="#2fe0c2" />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[4, 4, 4]} intensity={45} color="#ffffff" />
+      <pointLight position={[-4, -2, -3]} intensity={25} color="#e30016" />
       <MoleculeGroup dense={dense} />
     </Canvas>
   );
