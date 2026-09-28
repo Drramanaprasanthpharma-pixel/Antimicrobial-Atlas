@@ -6,11 +6,7 @@ import { usePathname } from "next/navigation";
 import { Atom, Menu, X } from "lucide-react";
 
 const links = [
-  { href: "/antibiotics", label: "Antibiotics" },
   { href: "/agents", label: "Agents" },
-  { href: "/classes", label: "Classes" },
-  { href: "/microbiology", label: "Microbiology" },
-  { href: "/resistance", label: "Resistance" },
 ];
 
 export default function Navbar() {

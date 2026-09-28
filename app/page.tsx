@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Hero3D from "@/components/three/Hero3D";
 import SearchBar from "@/components/search/SearchBar";
 import AntibioticCard from "@/components/antibiotics/AntibioticCard";
@@ -15,7 +14,7 @@ import { amsDefinitions, amsGoals } from "@/lib/data/ams-definitions";
 import { eightDs } from "@/lib/data/eight-ds";
 import { microbiologyTopics } from "@/lib/data/microbiology";
 import { resourceLinks } from "@/lib/data/resources";
-import { ArrowRight, ShieldCheck, Microscope, Pill } from "lucide-react";
+import { ShieldCheck, Microscope, Pill } from "lucide-react";
 
 export default function Home() {
   const popular = antibiotics.slice(0, 4);
@@ -42,18 +41,17 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-2 mt-4">
               {popular.map((a) => (
-                <Link
+                <span
                   key={a.id}
-                  href={`/antibiotics/${a.slug}`}
-                  className="text-xs rounded-full border border-line px-3 py-1.5 text-ink-1 hover:text-teal hover:border-line-strong transition-colors"
+                  className="text-xs rounded-full border border-line px-3 py-1.5 text-ink-1"
                 >
                   {a.genericName}
-                </Link>
+                </span>
               ))}
             </div>
           </div>
 
-          <div className="relative h-72 sm:h-96 lg:h-[420px]">
+          <div className="relative order-first h-64 sm:h-96 lg:order-last lg:h-[420px]">
             <Hero3D />
           </div>
         </div>
@@ -139,9 +137,6 @@ export default function Home() {
             <h2 className="font-display text-xl sm:text-2xl font-semibold text-ink-0">
               Antimicrobial agents
             </h2>
-            <Link href="/classes" className="text-sm text-teal flex items-center gap-1 hover:gap-1.5 transition-all">
-              All classes <ArrowRight size={14} />
-            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {topClasses.map((c) => (
@@ -181,9 +176,6 @@ export default function Home() {
                 Antibiotic database
               </h2>
             </div>
-            <Link href="/antibiotics" className="text-sm text-teal flex items-center gap-1 hover:gap-1.5 transition-all">
-              View all <ArrowRight size={14} />
-            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {popular.map((a) => (
@@ -205,9 +197,6 @@ export default function Home() {
                 Microbiology &amp; pathogens
               </h2>
             </div>
-            <Link href="/microbiology" className="text-sm text-teal flex items-center gap-1 hover:gap-1.5 transition-all">
-              Explore <ArrowRight size={14} />
-            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {microbiologyTopics.slice(0, 6).map((t) => (

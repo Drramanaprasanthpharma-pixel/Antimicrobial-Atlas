@@ -40,6 +40,14 @@ function BacteriaFallback() {
         <circle key={i} cx={x} cy={y} r={r} fill="url(#bf-red)" />
       ))}
       <path d="M40 176 q14 -30 28 0 t28 0 t28 0" stroke="url(#bf-dark)" strokeWidth="9" fill="none" strokeLinecap="round" />
+      {/* DNA double helix */}
+      <g strokeLinecap="round" fill="none">
+        <path d="M262 110 q-22 14 0 28 t0 28 t0 28" stroke="#c1121f" strokeWidth="5" />
+        <path d="M262 110 q22 14 0 28 t0 28 t0 28" stroke="#26262a" strokeWidth="5" />
+        {[124, 138, 152, 166, 180].map((y) => (
+          <line key={y} x1="250" y1={y} x2="274" y2={y} stroke="#9a9aa0" strokeWidth="2" />
+        ))}
+      </g>
     </svg>
   );
 }

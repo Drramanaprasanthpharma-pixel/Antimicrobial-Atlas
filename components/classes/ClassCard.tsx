@@ -1,13 +1,9 @@
-import Link from "next/link";
 import { AntibioticClass } from "@/lib/types";
 import { Layers } from "lucide-react";
 
 export default function ClassCard({ item }: { item: AntibioticClass }) {
   return (
-    <Link
-      href={`/classes#${item.slug}`}
-      className="group glass-card overflow-hidden flex flex-col"
-    >
+    <div className="glass-card-static overflow-hidden flex flex-col">
       <span className="accent-bar accent-bar-classes" aria-hidden />
       <div className="p-5 flex flex-col gap-3">
         <div className="flex items-center gap-2.5">
@@ -22,6 +18,6 @@ export default function ClassCard({ item }: { item: AntibioticClass }) {
           <span>{item.memberCount} in atlas</span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

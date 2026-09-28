@@ -188,6 +188,65 @@ function Spirillum({ tex }: { tex: THREE.Texture }) {
   );
 }
 
+/** 3D DNA double helix: glossy sugar-phosphate backbones with base-pair rungs, spinning on its axis. */
+function Dna({ pairs = 20, height = 3.4, radius = 0.42 }: { pairs?: number; height?: number; radius?: number }) {
+  const animate = useContext(AnimateContext);
+  const g = useRef<THREE.Group>(null);
+  useFrame((_, dt) => {
+    if (animate && g.current) g.current.rotation.y += dt * 0.7;
+  });
+  const { strandA, strandB, rungs } = useMemo(() => {
+    const turns = 2.2;
+    const N = pairs * 8;
+    const a: THREE.Vector3[] = [];
+    const b: THREE.Vector3[] = [];
+    for (let k = 0; k <= N; k++) {
+      const t = k / N;
+      const ang = t * turns * Math.PI * 2;
+      const y = (t - 0.5) * height;
+      a.push(new THREE.Vector3(Math.cos(ang) * radius, y, Math.sin(ang) * radius));
+      b.push(new THREE.Vector3(Math.cos(ang + Math.PI) * radius, y, Math.sin(ang + Math.PI) * radius));
+    }
+    const tube = (pts: THREE.Vector3[]) => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), N * 2, 0.045, 10, false);
+    const pal = [["#e30016", "#1a1a1d"], ["#1a1a1d", "#e30016"], ["#9c0018", "#3a3a3e"], ["#3a3a3e", "#9c0018"]];
+    const rungs = Array.from({ length: pairs }, (_, i) => {
+      const t = i / (pairs - 1);
+      return { y: (t - 0.5) * height, ang: t * turns * Math.PI * 2, c: pal[i % pal.length] };
+    });
+    return { strandA: tube(a), strandB: tube(b), rungs };
+  }, [pairs, height, radius]);
+  return (
+    <group ref={g}>
+      <mesh geometry={strandA}>
+        <meshPhysicalMaterial color="#c1121f" roughness={0.25} clearcoat={1} clearcoatRoughness={0.1} />
+      </mesh>
+      <mesh geometry={strandB}>
+        <meshPhysicalMaterial color="#26262a" roughness={0.25} clearcoat={1} clearcoatRoughness={0.1} />
+      </mesh>
+      {rungs.map((r, i) => (
+        <group key={i} position={[0, r.y, 0]} rotation={[0, -r.ang, 0]}>
+          <mesh position={[radius / 2, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.03, 0.03, radius, 10]} />
+            <meshPhysicalMaterial color={r.c[0]} roughness={0.3} clearcoat={0.8} />
+          </mesh>
+          <mesh position={[-radius / 2, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.03, 0.03, radius, 10]} />
+            <meshPhysicalMaterial color={r.c[1]} roughness={0.3} clearcoat={0.8} />
+          </mesh>
+          <mesh position={[radius, 0, 0]}>
+            <sphereGeometry args={[0.09, 20, 16]} />
+            <meshPhysicalMaterial color="#c1121f" roughness={0.25} clearcoat={1} />
+          </mesh>
+          <mesh position={[-radius, 0, 0]}>
+            <sphereGeometry args={[0.09, 20, 16]} />
+            <meshPhysicalMaterial color="#26262a" roughness={0.25} clearcoat={1} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
 function Drift({ children, position, rotation = [0, 0, 0], scale = 1, rx = 0.08, rz = 0.06, bob = 1 }: { children: ReactNode; position: [number, number, number]; rotation?: [number, number, number]; scale?: number; rx?: number; rz?: number; bob?: number }) {
   const animate = useContext(AnimateContext);
   const g = useRef<THREE.Group>(null);
@@ -234,11 +293,12 @@ function Organisms({ variant }: { variant: "compact" | "hero" }) {
     return (
       <Rig halfW={3.5} halfH={2.3}>
         <Drift position={[0.2, 0.3, 0]} rotation={[0, 0, 0.6]} scale={1.25}><Bacillus color="#c1121f" tex={tex} seed={3} /></Drift>
-        <Drift position={[-1.6, 1.3, -0.8]} rotation={[0.5, 0, -0.4]} scale={0.9} rx={0.05}><Bacillus color="#a30d19" tex={tex} seed={8} /></Drift>
-        <Drift position={[1.9, -0.9, 0.5]} rotation={[0, 0, 1.1]}><Bacillus color="#d8323f" tex={tex} seed={21} /></Drift>
+        <Drift position={[-0.9, 1.4, -0.8]} rotation={[0.5, 0, -0.4]} scale={0.9} rx={0.05}><Bacillus color="#a30d19" tex={tex} seed={8} /></Drift>
+        <Drift position={[1.7, -1.0, 0.5]} rotation={[0, 0, 1.1]} scale={0.9}><Bacillus color="#d8323f" tex={tex} seed={21} /></Drift>
         <Drift position={[-0.4, -1.55, 0.4]} rotation={[0, 0, -1.2]} scale={0.8}><Bacillus color="#b31020" tex={tex} seed={34} /></Drift>
         <Drift position={[-2.5, -0.3, 0]} scale={0.95} rx={0.05} rz={0.04}><CocciCluster count={16} tex={tex} seed={5} /></Drift>
-        <Drift position={[2.4, 1.5, -0.5]} rotation={[0, 0, 0.4]} rx={0.03} rz={0.03}><CocciChain count={8} tex={tex} /></Drift>
+        <Drift position={[-2.3, 1.7, -0.5]} rotation={[0, 0, -0.3]} rx={0.03} rz={0.03}><CocciChain count={6} tex={tex} /></Drift>
+        <Drift position={[3.0, 0, -0.3]} rotation={[0, 0, 0.3]} scale={1.05} rx={0} rz={0} bob={0.6}><Dna pairs={22} height={3.6} /></Drift>
         <Drift position={[0.7, 1.8, -0.6]} rotation={[0, Math.PI / 2, 0.5]} scale={0.8}><Spirillum tex={tex} /></Drift>
         {/* antibiotic capsule + tablet in the foreground */}
         <Drift position={[1.15, -0.2, 1.6]} rotation={[0.3, 0, -0.6]} scale={0.9} rx={0.15} rz={0.05}><Capsule /></Drift>
@@ -251,7 +311,7 @@ function Organisms({ variant }: { variant: "compact" | "hero" }) {
       <Drift position={[0.1, 0.35, 0]} rotation={[0, 0, 0.55]}><Bacillus color="#c1121f" tex={tex} seed={3} /></Drift>
       <Drift position={[-0.2, -0.6, 0.4]} rotation={[0, 0, -0.5]} scale={0.85}><Bacillus color="#a30d19" tex={tex} seed={8} /></Drift>
       <Drift position={[-1.6, -0.5, -0.2]} scale={0.5} rx={0.05} rz={0.04}><CocciCluster count={12} tex={tex} seed={5} /></Drift>
-      <Drift position={[1.4, 0.55, 0]} rotation={[0, Math.PI / 2, 0.5]} scale={0.65}><Spirillum tex={tex} /></Drift>
+      <Drift position={[1.5, 0, 0]} rotation={[0, 0, 0.3]} scale={0.6} rx={0} rz={0} bob={0.6}><Dna pairs={18} height={3.2} /></Drift>
     </Rig>
   );
 }
