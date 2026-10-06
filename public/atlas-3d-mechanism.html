@@ -88,6 +88,8 @@ html,body{height:100%;overflow:hidden}
 #panel #chain,#panel #bar{margin:0 0 8px;padding:0;border:0;background:transparent}
 }
 @media (pointer:coarse){button,#chain span{min-height:44px}}
+/* Sections removed from the visible panel (kept in DOM so the engine's lookups don't break) */
+#pearl,#drw,#cmpd,#qz,#ext,#dv,#dbg,#panel>p.note{display:none!important}
 </style></head><body>
 <div id="app"><div id="stage"><canvas id="c"></canvas><div id="lbls"></div><div id="mk" class="ov"></div>
 <div id="top"><div id="sw"><input id="q" type="search" placeholder="Search name, brand, class, target or ATC code (e.g. Meropenem)…" autocomplete="off" aria-label="Search antibiotic"><div id="dd"><details id="flt"><summary>Filters</summary><div id="fb"></div></details><ul id="sg"></ul></div></div></div>
