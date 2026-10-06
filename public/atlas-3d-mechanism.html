@@ -389,8 +389,17 @@ if(hero)interior(up);
 ctx.save();up(1);ctx.clip();let y0=1e9,y1=-1e9;for(const p of pr){y0=Math.min(y0,p.y-p.r);y1=Math.max(y1,p.y+p.r)}
 if(pr.length==1){const p=pr[0],g2=ctx.createRadialGradient(p.x-.35*p.r,p.y-.4*p.r,p.r*.1,p.x,p.y,p.r*1.05);g2.addColorStop(0,'rgba(255,255,255,.30)');g2.addColorStop(.55,'rgba(255,255,255,0)');g2.addColorStop(1,'rgba(10,0,20,.42)');ctx.fillStyle=g2;ctx.fillRect(p.x-p.r,p.y-p.r,2*p.r,2*p.r)}
 else{const g2=ctx.createLinearGradient(0,y0,0,y1);g2.addColorStop(0,'rgba(255,255,255,.26)');g2.addColorStop(.45,'rgba(255,255,255,0)');g2.addColorStop(1,'rgba(10,0,20,.40)');ctx.fillStyle=g2;ctx.fillRect(0,y0,W,y1-y0)}
-if(V.death>.01){ctx.fillStyle='rgba(70,12,18,'+(.5*V.death*(V.d.k=='pbp'?.55:1))+')';ctx.fillRect(0,y0,W,y1-y0+2)}
-ctx.restore()}
+if(V.death>.01){const dd=V.death,kk=V.d.k=='pbp'?.85:1;
+/* dead-cell look: drained grey-brown wash, flattened shading, dark cracks across the envelope */
+ctx.fillStyle='rgba(96,94,98,'+(.66*dd*kk)+')';ctx.fillRect(0,y0,W,y1-y0+2);
+ctx.fillStyle='rgba(38,22,18,'+(.2*dd)+')';ctx.fillRect(0,y0,W,y1-y0+2);
+ctx.strokeStyle='rgba(22,14,14,'+(.85*dd)+')';ctx.lineWidth=1.5;ctx.lineCap='round';
+pr.forEach((p,i)=>{for(let j=0;j<5;j++){const a=j*1.2566+i*.9+.4,len=p.r*(.3+.55*dd)*(.75+.25*Math.sin(j*3.1+i));let x=p.x+Math.cos(a)*p.r*.97,y=p.y+Math.sin(a)*p.r*.97;ctx.beginPath();ctx.moveTo(x,y);for(let q=1;q<=5;q++){const aa=a+Math.PI+Math.sin(q*2.3+j*1.7+i)*.5;x+=Math.cos(aa)*len/5;y+=Math.sin(aa)*len/5;ctx.lineTo(x,y)}ctx.stroke()}})}
+ctx.restore();
+if(V.death>.01){const dd=V.death;ctx.save();
+/* lysis: cytoplasm and debris leak out of the broken envelope and fade away */
+for(let i=0;i<26;i++){const p=pr[i%pr.length],a=i*2.399+(i%3)*.5,ph=(T*.3+i*.137)%1,rr=p.r*(1.02+.95*ph*dd),px=p.x+Math.cos(a)*rr,py=p.y+Math.sin(a)*rr+ph*p.r*.3;ctx.globalAlpha=Math.max(0,1-ph)*.85*dd;ctx.fillStyle=i%2?'#8a7f6a':'#b9a48a';ctx.beginPath();ctx.arc(px,py,Math.max(1.2,p.r*.055*(1-.5*ph)),0,6.2832);ctx.fill()}
+ctx.restore()}}
 /* ---- beta-lactam molecular close-up (schematic): normal transpeptidation -> drug binds PBP -> blocked cross-linking -> weakening -> lysis ---- */
 const MAT=[[0,0,'N'],[.12,0,'C'],[.12,.12,'C'],[0,.12,'C'],[.22,-.07,'O'],[-.11,.16,'C'],[-.18,.06,'C'],[-.11,-.02,'C'],[.2,.2,'C'],[.3,.22,'S'],[.4,.17,'C'],[.46,.26,'N'],[.38,.32,'C'],[-.2,.26,'C'],[-.28,.32,'O'],[-.14,.36,'O']],
 MBD=[[0,1],[1,2],[2,3],[3,0],[1,4],[3,5],[5,6],[6,7],[7,0],[2,8],[8,9],[9,10],[10,11],[11,12],[12,10],[6,13],[13,14],[13,15]],MCOL={N:'#4a6fd0',C:'#9a9ca3',O:'#d9544f',S:'#e2c34a'};
