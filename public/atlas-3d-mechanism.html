@@ -90,6 +90,7 @@ html,body{height:100%;overflow:hidden}
 @media (pointer:coarse){button,#chain span{min-height:44px}}
 /* Sections removed from the visible panel (kept in DOM so the engine's lookups don't break) */
 #pearl,#drw,#cmpd,#qz,#ext,#dv,#dbg,#panel>p.note{display:none!important}
+.lb{transition:opacity .6s ease}
 </style></head><body>
 <div id="app"><div id="stage"><canvas id="c"></canvas><div id="lbls"></div><div id="mk" class="ov"></div>
 <div id="top"><div id="sw"><input id="q" type="search" placeholder="Search name, brand, class, target or ATC code (e.g. Meropenem)…" autocomplete="off" aria-label="Search antibiotic"><div id="dd"><details id="flt"><summary>Filters</summary><div id="fb"></div></details><ul id="sg"></ul></div></div></div>
@@ -562,7 +563,7 @@ const ph_=(T*.8)%1,col=V.inh>.5?'217,4,41':'20,20,20';ctx.strokeStyle='rgba('+co
 ctx.fillStyle='#fff';ctx.strokeStyle='rgb('+col+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(qT[0],qT[1],4.5,0,7);ctx.fill();ctx.stroke();
 dl.textContent=d.n;dl.style.display='';dl.style.left=qO[0]+'px';dl.style.top=(qO[1]-6)+'px'}else dl.style.display='none';
 mk.innerHTML=esc(d.n)+' → '+esc(LBT[k])+'<small>TARGET'+(SCH[k]?' · schematic location':'')+'</small>';mk.style.transform='translate(-50%,-100%)';if(qT){mk.style.display='';mk.style.left=qT[0]+'px';mk.style.top=(qT[1]-30)+'px'}else mk.style.display='none';
-B.lb.forEach((l,i)=>{const el=lbEl(i);at(l[1],el,l[2],l[3]);el.style.opacity=labelsOn?(1-.85*f)*(k=='pbp'?1-.75*ease(V.t,.06,.16)*(1-ease(V.t,.94,1)):1):0});
+B.lb.forEach((l,i)=>{const el=lbEl(i);at(l[1],el,l[2],l[3]);el.style.opacity=0});
 if(first){first=false;$('#dbg').textContent='3D OK · self-contained renderer (no external libraries) · '+W+'×'+Hh+' px @'+dpr+'x';LOG('[Atlas3D] first frame rendered',W,Hh)}}
 
 frame()}
