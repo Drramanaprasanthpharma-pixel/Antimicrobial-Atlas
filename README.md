@@ -1,16 +1,16 @@
 # Antimicrobial Atlas
 
-A frontend-only reference site for healthcare professionals \u2014 clinical pharmacists,
-physicians, microbiologists, and pharmacy/medical students \u2014 covering antimicrobial
+A frontend-only reference site for healthcare professionals — clinical pharmacists,
+physicians, microbiologists, and pharmacy/medical students — covering antimicrobial
 agents, pathogens, and stewardship, with an interactive 3D hero visualization. Built as a
 scaffold ready for a future Firebase/Firestore backend.
 
-> **Antibiotic profiles are being progressively source-verified.** Only profiles marked
-> "Source-verified" have been checked against the references listed on them; all other
-> antibiotic fields read "Not verified — requires clinical review" — see "Clinical Content
+> **Antibiotic profiles are source-verified against the references listed on them, one
+> manufacturer label per profile; this is not a clinical validation.** Fields that could
+> not be sourced read "Not verified — requires clinical review" — see "Clinical Content
 > Verification" below. The Antimicrobial Stewardship content (definitions, the
 > 8 Ds, the goals list) was supplied directly by the site owner as source content and
-> reproduced as given \u2014 see "Content sources" below.
+> reproduced as given — see "Content sources" below.
 
 ## Stack
 
@@ -19,34 +19,34 @@ scaffold ready for a future Firebase/Firestore backend.
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) + [drei](https://github.com/pmndrs/drei) for the 3D hero
 - [Lucide](https://lucide.dev) icons
 
-No database, authentication, or API layer is included yet \u2014 see "What's next" below.
+No database, authentication, or API layer is included yet — see "What's next" below.
 
 ## Homepage structure
 
-1. Hero (3D molecule visual + prominent search)
-2. Antimicrobial Stewardship \u2014 intro, goals, WHO / CDC / IDSA definition cards
-3. The 8 Ds of Antimicrobial Stewardship \u2014 interactive, click-to-expand cards
-4. AMS as a clinical decision framework \u2014 vertical pathway diagram
+The homepage (`app/page.tsx`) currently contains, in order:
+
+1. Hero — 3D bacteria scene plus a search input (the input is a visual component only; it is not wired to a results page)
+2. Antimicrobial Stewardship — intro, goals, WHO / CDC / IDSA definition cards
+3. The 8 Ds of Antimicrobial Stewardship — interactive, click-to-expand cards
+4. AMS as a clinical decision framework — vertical pathway diagram
 5. Antimicrobial agents (drug classes)
-6. Empirical antimicrobial therapy (teaser \u2192 `/ams`)
-7. Antibiotic database (teaser \u2192 `/antibiotics`)
-8. Microbiology & pathogens (teaser \u2192 `/microbiology`)
+6. Empirical antimicrobial therapy (informational card)
+7. Antibiotic database — four antibiotic cards with source-verification status and references
+8. Microbiology & pathogens
 9. Clinical tools
 10. Resources & references
 
-## Pages
+## Routes
+
+Only the routes below exist in the current codebase. Earlier versions of this project also had `/antibiotics`, `/antibiotics/[slug]`, `/classes`, `/spectrum`, `/ams`, `/microbiology`, `/resistance` and `/admin`; those pages were removed and are **not** part of the current app.
 
 | Route | Description |
 | --- | --- |
-| `/` | Home \u2014 see structure above |
-| `/antibiotics` | Searchable antibiotic list |
-| `/antibiotics/[slug]` | Full antibiotic profile (mechanism, spectrum, dosing, PK/PD, etc.) |
-| `/classes` | Antimicrobial agent classes (penicillins, cephalosporins, carbapenems, \u2026) |
-| `/spectrum` | Interactive antibiotic \u00d7 organism susceptibility matrix |
-| `/ams` | Antimicrobial stewardship pillars (empirical therapy, de-escalation, IV-to-oral, dose/duration optimization) |
-| `/microbiology` | Core microbiology concepts (gram stain, culture, MIC, susceptibility) |
-| `/resistance` | Resistance mechanisms (ESBL, AmpC, MRSA, VRE, carbapenem resistance) |
-| `/admin` | Visual-only admin dashboard placeholder (no backend wiring yet) |
+| `/` | Home — see structure above |
+| `/agents` | Antimicrobial agents classification browser (searchable expand/collapse tree) with an embedded 3D mechanism-of-action viewer |
+| `/atlas-3d-mechanism.html` | Static, self-contained 3D mechanism viewer (`public/atlas-3d-mechanism.html`), embedded on `/agents` and openable full screen |
+
+Navigation: the navbar links to `/agents`; the footer links to `/agents`.
 
 ## Getting started
 
@@ -67,48 +67,37 @@ npm run lint    # eslint
 
 ```
 antimicrobial-atlas/
-├── app/                          # Next.js App Router pages
+├── app/                          # Next.js App Router
 │   ├── layout.tsx                # Root layout, fonts, Navbar/Footer shell
 │   ├── page.tsx                  # Home (AMS, 8 Ds, pathway, agents, database, etc.)
-│   ├── globals.css               # Design tokens, glass utility, molecular backdrop
-│   ├── antibiotics/{page.tsx,[slug]/page.tsx}
-│   ├── classes/page.tsx
-│   ├── spectrum/page.tsx
-│   ├── ams/page.tsx
-│   ├── microbiology/page.tsx
-│   ├── resistance/page.tsx
-│   └── admin/page.tsx
+│   ├── globals.css               # Design tokens and utilities
+│   └── agents/page.tsx           # /agents
 ├── components/
 │   ├── layout/                   # Navbar, Footer
-│   ├── three/                    # Hero3D (wrapper) + MoleculeScene (R3F canvas)
+│   ├── three/                    # Hero3D, Bacteria3D, BacteriaScene, Pills (React Three Fiber)
 │   ├── search/                   # SearchBar
-│   ├── antibiotics/              # AntibioticCard, AntibioticHeader, InformationSection
+│   ├── antibiotics/              # AntibioticCard (source-verification status + references)
+│   ├── agents/                   # AgentsExplorer, GlossaryPanel
 │   ├── classes/                  # ClassCard
-│   ├── spectrum/                 # SpectrumMatrix
-│   ├── references/               # ReferenceCard, ResourceLinkCard
+│   ├── references/               # ResourceLinkCard
 │   ├── tools/                    # ClinicalToolCard
-│   ├── admin/                    # AdminCard
 │   ├── ams/                      # AMSDefinitionCard, EightDCard, AMSPathwayFlow
-│   └── ui/                       # PageHeader, DemoBanner
+│   └── ui/                       # Alert, Badge, PageHeader, DemoBanner
 ├── lib/
-│   ├── types.ts                  # Shared TS interfaces (mirrors planned Firestore schema)
-│   └── data/                     # antibiotics, classes, tools, organisms, ams, ams-definitions,
-│                                  # eight-ds, ams-pathway, resources, microbiology, resistance
+│   ├── types.ts                  # Shared TS interfaces
+│   └── data/                     # antibiotics, agents, classes, tools, ams-definitions,
+│                                 # eight-ds, ams-pathway, resources, microbiology
 └── public/
+    └── atlas-3d-mechanism.html   # Standalone 3D mechanism viewer
 ```
 
 ## Design
 
-Deep navy base with teal, cyan and emerald accents on glassmorphism panels \u2014 a
-scientific/clinical feel with a subtle molecular dot-pattern backdrop behind the AMS
-section. Colors, type and the `.glass` / `.molecular-backdrop` utilities are defined as
-CSS custom properties in `app/globals.css` \u2014 change them there to re-theme the whole
-app.
+White page background with black text. Colors, type and the `.glass` utilities are defined
+as CSS custom properties in `app/globals.css` — change them there to re-theme the app.
 
-The 3D hero (`components/three/Hero3D.tsx`) renders an abstract molecule using React
-Three Fiber. It falls back to a static gradient orb when WebGL is unavailable or the
-visitor has `prefers-reduced-motion` enabled, and reduces geometry density on narrow
-viewports.
+The 3D hero (`components/three/Hero3D.tsx` → `Bacteria3D` → `BacteriaScene`) renders a 3D
+bacteria scene with React Three Fiber and is loaded client-side only (dynamic import, no SSR).
 
 ## Content sources
 
@@ -121,35 +110,35 @@ viewports.
   status. Unsourced fields are explicitly marked "Not verified — requires clinical review"
   rather than estimated. See "Clinical Content Verification" below.
 - **The `/agents` classification browser** (`lib/data/agents.ts`) is transcribed directly
-  from a supplied textbook table (classification of antimicrobial agents \u2014
+  from a supplied textbook table (classification of antimicrobial agents —
   class/mechanism, drugs, spectrum of activity, mechanism of resistance). No dosing,
-  PK/PD, interactions, adverse effects or clinical recommendations were added \u2014 only
+  PK/PD, interactions, adverse effects or clinical recommendations were added — only
   what appeared in the source table. Where a table cell was illegible in the source
   photo, the value is the literal string `"[TEXT UNCLEAR]"` rather than a guess; where a
   cell was genuinely blank in the source, the UI shows "Not stated in source."
 
-## `/agents` \u2014 Antimicrobial Agents classification browser
+## `/agents` — Antimicrobial Agents classification browser
 
-A new, separate section (does not modify the existing `/classes` or `/antibiotics`
-pages or their data):
+A separate section with its own data (`lib/data/agents.ts`), independent of
+`lib/data/antibiotics.ts` and `lib/data/classes.ts`:
 
-- `lib/data/agents.ts` \u2014 typed, book-faithful data: `MajorSection` (book sections A\u2013F)
-  \u2192 `ClassGroup` (e.g. \u03b2-Lactam Antibiotics) \u2192 `Subclass` (e.g. Penicillins,
-  Cephalosporins) \u2192 `DrugVariant` (drugs + spectrum of activity, with an optional
+- `lib/data/agents.ts` — typed, book-faithful data: `MajorSection` (book sections A–F)
+  → `ClassGroup` (e.g. β-Lactam Antibiotics) → `Subclass` (e.g. Penicillins,
+  Cephalosporins) → `DrugVariant` (drugs + spectrum of activity, with an optional
   label for book sub-rows like "1st generation"). Each `Subclass` also carries its own
   `mechanismOfResistance` list, matching the book's table exactly.
-- `components/agents/AgentsExplorer.tsx` \u2014 client component rendering the three-level
-  expand/collapse tree (Section \u2192 Class \u2192 Subclass \u2192 drugs / spectrum /
+- `components/agents/AgentsExplorer.tsx` — client component rendering the three-level
+  expand/collapse tree (Section → Class → Subclass → drugs / spectrum /
   resistance), with a live search box that filters by drug name, class name, or any
   visible text and auto-expands matches. Touch-friendly tap targets throughout.
-- `components/agents/GlossaryPanel.tsx` \u2014 renders the abbreviation footnote from the
+- `components/agents/GlossaryPanel.tsx` — renders the abbreviation footnote from the
   source table (MSSA, MRSA, CA-MRSA, ESBL, VRE).
-- `app/agents/page.tsx` \u2014 the route itself, reusing the existing `PageHeader` and
+- `app/agents/page.tsx` — the route itself, reusing the existing `PageHeader` and
   `Alert` components and the site's glass-card design system.
 
 Swapping this for Firestore later: replace the `antimicrobialAgents` array in
 `lib/data/agents.ts` with a fetch of a collection shaped the same way (`MajorSection[]`)
-\u2014 `AgentsExplorer` only needs that shape as a prop, so no component changes required.
+— `AgentsExplorer` only needs that shape as a prop, so no component changes required.
 
 ## Clinical Content Verification
 
@@ -163,11 +152,20 @@ regulatory prescribing information, and peer-reviewed literature. Each profile i
 - Any field that could not be established from a reliable source reads
   **"Not verified — requires clinical review"**. No doses, PK/PD values, resistance
   mechanisms or indications are estimated.
-- Current status: **1 of 6** profiles is source-verified — ceftriaxone, from a single
-  FDA-approved manufacturer label (Hospira, revised 10/2017); its pharmacodynamics field
-  is still unverified. The other five (vancomycin, meropenem, azithromycin, linezolid,
-  piperacillin/tazobactam) have had their earlier demo values removed and are awaiting
-  source review. Not all content is validated.
+- Current status: all **6** profiles (ceftriaxone, vancomycin, meropenem, azithromycin,
+  linezolid, piperacillin/tazobactam) are source-verified, each from **one**
+  FDA-approved manufacturer label (see the `references` on each profile). This is a
+  small starting set, not a validated database. Known limits:
+  - Ceftriaxone (2017 label), meropenem (2022 label) and piperacillin/tazobactam (2017
+    label) use older labeling; newer labeling and WHO/CDC/IDSA/ESCMID guidance have not
+    been reconciled.
+  - Azithromycin is sourced from the oral-formulation label only; intravenous
+    azithromycin labeling was not reviewed.
+  - Fields the source does not state are marked "Not verified — requires clinical
+    review": numeric PK/PD targets (all six profiles), vancomycin hepatic dosing and
+    resistance mechanisms, azithromycin renal/hepatic dosing, piperacillin/tazobactam
+    resistance mechanisms, and the linezolid duration-to-indication mapping.
+  - No human clinical review has been performed on any profile.
 
 This platform is an educational / reference resource. It does not replace professional
 clinical judgment, institutional guidelines, local antibiograms, or official prescribing
@@ -185,8 +183,8 @@ clinical decision-maker for this project.
 
 `lib/types.ts` defines the `Antibiotic` interface with the full field set the brief
 specified (`genericName`, `class`, `mechanism`, `spectrum`, `dosing`,
-`renalAdjustment`, `pharmacokinetics`, `references`, \u2026). `lib/data/antibiotics.ts`
-currently holds six entries in that shape (one source-verified, five awaiting verification) \u2014 swapping that file's source for a
+`renalAdjustment`, `pharmacokinetics`, `references`, …). `lib/data/antibiotics.ts`
+currently holds six entries in that shape, each with `references` and a `verification` status — swapping that file's source for a
 Firestore query later shouldn't require touching any component. The homepage never
 hard-codes antibiotic content directly; it always imports from `lib/data/*`.
 
@@ -194,23 +192,22 @@ hard-codes antibiotic content directly; it always imports from `lib/data/*`.
 
 1. Set up Firebase project + Firestore collections matching `lib/types.ts`
 2. Replace `lib/data/*` static arrays with Firestore reads (e.g. via a small `lib/db.ts`)
-3. Wire the search bar to a real cross-field search (antibiotic, pathogen, infection,
+3. Wire the homepage search bar to a real cross-field search (antibiotic, pathogen, infection,
    drug class, mechanism, spectrum, dose, renal/hepatic adjustment, interactions,
    adverse effects, resistance, AMS topics)
-4. Add authentication for the `/admin` area
-5. Wire `/admin` forms to real create/update/delete operations
+4. If an admin area is reintroduced, add authentication for it
+5. Wire any admin forms to real create/update/delete operations
 6. Continue source verification of the remaining antibiotic profiles and add a human clinical review step
 
 ## Pre-push checklist
 
-- [x] `npm run build` succeeds
-- [x] `npm run lint` \u2014 no errors (one benign `no-page-custom-font` warning)
-- [x] Responsive layout checked at mobile/tablet/desktop breakpoints
-- [x] All nav links resolve (`/antibiotics`, `/classes`, `/spectrum`, `/ams`,
-      `/microbiology`, `/resistance`, `/admin`)
-- [x] Homepage sections render: hero, AMS intro + definitions, 8 Ds, pathway flow,
-      agents, empirical therapy teaser, database, microbiology, tools, resources
-- [x] Search UI functional on `/antibiotics` (client-side filter)
+- [ ] `npm run lint` — no errors
+- [ ] `npm run build` succeeds; build output lists only `/` and `/agents` as app routes
+- [ ] Homepage renders: hero, AMS intro + definitions, 8 Ds, pathway flow, agents,
+      empirical therapy card, antibiotic database cards, microbiology, tools, resources
+- [ ] `/agents` renders, its search box filters, and the embedded 3D viewer loads
+- [ ] Antibiotic cards show the source-verification line and references
+- [ ] No secrets or tokens in the diff
 
 ## Deploying to GitHub
 
@@ -231,5 +228,5 @@ git remote add origin YOUR_GITHUB_REPOSITORY_URL
 git push -u origin main
 ```
 
-No secrets, API keys, or credentials are present in this repo \u2014 there is nothing to
+No secrets, API keys, or credentials are present in this repo — there is nothing to
 scrub before pushing.
