@@ -23,6 +23,20 @@ export interface ReferenceItem {
   id: string;
   citation: string;
   url?: string;
+  title?: string;
+  organization?: string;
+  year?: number;
+  accessed?: string; // ISO date the source was read
+}
+
+// Source-verification state for a profile. "source-verified" means the populated
+// fields were checked against the listed references; it does NOT mean a clinician
+// has reviewed or validated the profile. Fields that could not be sourced carry the
+// literal text "Not verified — requires clinical review".
+export interface VerificationInfo {
+  status: "source-verified" | "unverified";
+  lastReviewed: string; // e.g. "October 2026"
+  note?: string;
 }
 
 export interface Antibiotic {
@@ -48,7 +62,9 @@ export interface Antibiotic {
   contraindications: string[];
   resistance: string;
   monitoring: string[];
+  stewardshipNotes?: string[];
   references: ReferenceItem[];
+  verification?: VerificationInfo;
 }
 
 export interface AntibioticClass {

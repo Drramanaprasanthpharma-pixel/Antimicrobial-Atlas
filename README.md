@@ -5,8 +5,10 @@ physicians, microbiologists, and pharmacy/medical students \u2014 covering antim
 agents, pathogens, and stewardship, with an interactive 3D hero visualization. Built as a
 scaffold ready for a future Firebase/Firestore backend.
 
-> **Antibiotic profiles, dosing figures and PK/PD values are demo / placeholder data**
-> written to exercise the UI. The Antimicrobial Stewardship content (definitions, the
+> **Antibiotic profiles are being progressively source-verified.** Only profiles marked
+> "Source-verified" have been checked against the references listed on them; all other
+> antibiotic fields read "Not verified — requires clinical review" — see "Clinical Content
+> Verification" below. The Antimicrobial Stewardship content (definitions, the
 > 8 Ds, the goals list) was supplied directly by the site owner as source content and
 > reproduced as given \u2014 see "Content sources" below.
 
@@ -113,9 +115,11 @@ viewports.
 - **Antimicrobial stewardship definitions** (WHO, CDC, IDSA), the **stewardship goals
   list**, and the **8 Ds** are reproduced as supplied by the site owner in
   `lib/data/ams-definitions.ts` and `lib/data/eight-ds.ts`.
-- **Antibiotic profiles, dosing, and PK/PD values** in `lib/data/antibiotics.ts` are demo
-  / placeholder content for interface scaffolding \u2014 not verified clinical guidance.
-  Anything intended to go live needs review and replacement by a qualified source.
+- **Antibiotic profiles, dosing, and PK/PD values** in `lib/data/antibiotics.ts` are being
+  replaced with content taken from regulatory prescribing information and other
+  authoritative sources, each profile carrying its own `references` and a `verification`
+  status. Unsourced fields are explicitly marked "Not verified — requires clinical review"
+  rather than estimated. See "Clinical Content Verification" below.
 - **The `/agents` classification browser** (`lib/data/agents.ts`) is transcribed directly
   from a supplied textbook table (classification of antimicrobial agents \u2014
   class/mechanism, drugs, spectrum of activity, mechanism of resistance). No dosing,
@@ -147,12 +151,42 @@ Swapping this for Firestore later: replace the `antimicrobialAgents` array in
 `lib/data/agents.ts` with a fetch of a collection shaped the same way (`MajorSection[]`)
 \u2014 `AgentsExplorer` only needs that shape as a prop, so no component changes required.
 
+## Clinical Content Verification
+
+Clinical information is being progressively reviewed against authoritative guidelines,
+regulatory prescribing information, and peer-reviewed literature. Each profile in
+`lib/data/antibiotics.ts` has a `verification` status and a `references` list.
+
+- **Source-verified** means the populated fields were checked against the listed
+  references. It does **not** mean the profile has been clinically validated by a human
+  reviewer.
+- Any field that could not be established from a reliable source reads
+  **"Not verified — requires clinical review"**. No doses, PK/PD values, resistance
+  mechanisms or indications are estimated.
+- Current status: **1 of 6** profiles is source-verified — ceftriaxone, from a single
+  FDA-approved manufacturer label (Hospira, revised 10/2017); its pharmacodynamics field
+  is still unverified. The other five (vancomycin, meropenem, azithromycin, linezolid,
+  piperacillin/tazobactam) have had their earlier demo values removed and are awaiting
+  source review. Not all content is validated.
+
+This platform is an educational / reference resource. It does not replace professional
+clinical judgment, institutional guidelines, local antibiograms, or official prescribing
+information.
+
+## AI-Assisted Development
+
+AI-assisted development tools were used for software development, code generation,
+debugging, interface development, documentation, and information organization.
+AI-generated output is not treated as an authoritative clinical source, and human review
+and source verification are required for all clinical information. AI is not an author or
+clinical decision-maker for this project.
+
 ## Data model
 
 `lib/types.ts` defines the `Antibiotic` interface with the full field set the brief
 specified (`genericName`, `class`, `mechanism`, `spectrum`, `dosing`,
 `renalAdjustment`, `pharmacokinetics`, `references`, \u2026). `lib/data/antibiotics.ts`
-currently hard-codes six demo entries in that shape \u2014 swapping that file's source for a
+currently holds six entries in that shape (one source-verified, five awaiting verification) \u2014 swapping that file's source for a
 Firestore query later shouldn't require touching any component. The homepage never
 hard-codes antibiotic content directly; it always imports from `lib/data/*`.
 
@@ -165,7 +199,7 @@ hard-codes antibiotic content directly; it always imports from `lib/data/*`.
    adverse effects, resistance, AMS topics)
 4. Add authentication for the `/admin` area
 5. Wire `/admin` forms to real create/update/delete operations
-6. Replace demo antibiotic content with reviewed, sourced material
+6. Continue source verification of the remaining antibiotic profiles and add a human clinical review step
 
 ## Pre-push checklist
 
