@@ -29,8 +29,6 @@ button:hover{background:var(--cy);border-color:var(--cy)}button:focus-visible{ou
 #err{display:none;position:absolute;inset:0;place-items:center;text-align:center;padding:30px;z-index:8;background:rgba(255,255,255,.92)}
 #panel{padding:16px;overflow:auto;border-left:2px solid #111;background:#fff;min-height:0}
 h1{font-size:22px;margin:0;letter-spacing:.02em}.cls{color:var(--cy);font-size:13px;margin-bottom:6px;font-weight:700}
-#tb{margin:8px 0 4px;border:1.5px solid #111;border-left:5px solid var(--cy);border-radius:3px;padding:8px 10px;background:#fafafa}
-#tb b{display:block;font-size:11px;letter-spacing:.08em;color:var(--cy);margin-top:6px}#tb b:first-child{margin-top:0}#tb div{font-size:14px}
 dt{color:var(--mu);font-size:12px;margin-top:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}dd{margin:0}
 .chips span{display:inline-block;margin:2px 4px 0 0;padding:2px 8px;border:1px solid #111;border-radius:3px;font-size:13px}
 .eff{color:var(--cy);font-weight:700}.eff.s{color:#111}
@@ -67,7 +65,7 @@ button{padding:7px 8px;font-size:13px;min-height:44px}
 #fx{top:8px;right:6px;font-size:11px;max-width:150px}
 .lb{font-size:11px}
 #panel{height:auto;overflow:visible;border-left:0;border-top:2px solid #111;padding:12px 12px calc(28px + env(safe-area-inset-bottom,0px))}
-#panel h1,#panel dd,#panel dt,#tb div,#sg li,#exd dd,.chips span,#dvb,.cls,ol li,.ab{overflow-wrap:anywhere;word-break:normal}
+#panel h1,#panel dd,#panel dt,#sg li,#exd dd,.chips span,#dvb,.cls,ol li,.ab{overflow-wrap:anywhere;word-break:normal}
 h1{font-size:20px}#sg li{flex-wrap:wrap}#panel input[type=file]{max-width:100%}
 #cap{white-space:normal;max-width:calc(100% - 20px);font-size:11px}
 }
@@ -98,7 +96,6 @@ html,body{height:100%;overflow:hidden}
 <div id="bar"><div id="md" role="group" aria-label="Mode"><button id="mdA" class="on">Auto</button><button id="mdE">Explore</button></div><div id="ctl"><button id="pp">▶ Play</button><button id="rp">↻ Replay</button><button id="zi">🔍 Zoom</button><button id="tg">🎯 Target</button><button id="lb" class="on">🏷 Labels</button><button id="mo" aria-expanded="false">⋯ More</button></div><div id="stp" style="display:none"><button id="pv">◀ Back</button><button id="nx">Next ▶</button></div><div id="mm" hidden><button id="zo">Zoom −</button><button id="rv">Reset view</button><button id="sm">Step-by-step</button><button id="tm">🎓 Teaching mode</button><button id="ex">Hide explanations</button><button id="fs">⛶ Full screen</button></div></div>
 <div id="err"><div><b id="em">3D could not start.</b><br><span class="note">The mechanism text still works; open the browser console (F12) for the exact error message.</span></div></div></div>
 <aside id="panel"><div id="sum" class="card min"></div><div id="wih" class="card" aria-live="polite"><div class="wt">🔬 WHAT IS HAPPENING?</div><div id="wtx"></div><div id="wsum" hidden></div></div><h1 id="pn"></h1><div class="cls" id="pc"></div>
-<details class="ac" open><summary>Target</summary><div class="ab"><div id="tb"></div><dl><dt>Target site</dt><dd id="p1"></dd><dt>Site of action</dt><dd id="p2"></dd><dt>Molecular target</dt><dd id="p3"></dd><dt>Bacterial structures involved</dt><dd id="p6" class="chips"></dd></dl></div></details>
 <details class="ac" open><summary>Mechanism</summary><div class="ab"><dl><dt>Mechanism of action</dt><dd id="p4"></dd><dt>Downstream effect</dt><dd id="p5"></dd><dt>Outcome</dt><dd id="p7"></dd></dl><ol id="st"></ol><p class="note" id="sch"></p></div></details>
 <details class="ac" id="why" open><summary>Why does this matter clinically?</summary><div class="ab" id="whyb"></div></details>
 <details class="ac" id="pearl"><summary>💡 Clinical pearl</summary><div class="ab" id="pearlb"></div></details>
@@ -174,12 +171,12 @@ function derive(t){V.t=t;V.hl=ease(t,0,.05);V.bind=ease(t,.38,.55);V.inh=ease(t,
 V.focus=sm(ph(t,0,.14))*(1-sm(ph(t,.94,1)));let s=0;for(let i=0;i<48;i++)s+=1-ease((i+.5)/48*t,.55,.75);V.proc=s*t/48*DUR}
 /* ===== UI ===== */
 const q=$('#q'),sg=$('#sg');
-function fill(){const d=V.d;$('#pn').textContent=d.n.toUpperCase();$('#pc').textContent=d.cls;$('#p1').textContent=d.site;$('#p2').textContent=d.sa;$('#p3').textContent=d.mol;$('#p4').textContent=d.moa;$('#p5').textContent=d.down;
-$('#p6').innerHTML=d.st.map(s=>'<span>'+esc(s)+'</span>').join('');$('#p7').innerHTML=d.c==null?'<span class="eff s">Bactericidal / bacteriostatic classification not available</span>':d.c?'<span class="eff">Bactericidal – bacterial cell death</span>':'<span class="eff s">Bacteriostatic – bacterial growth inhibited</span>';
+function fill(){const d=V.d;$('#pn').textContent=d.n.toUpperCase();$('#pc').textContent=d.cls;$('#p4').textContent=d.moa;$('#p5').textContent=d.down;
+$('#p7').innerHTML=d.c==null?'<span class="eff s">Bactericidal / bacteriostatic classification not available</span>':d.c?'<span class="eff">Bactericidal – bacterial cell death</span>':'<span class="eff s">Bacteriostatic – bacterial growth inhibited</span>';
 $('#st').innerHTML=steps(d).map((s,i)=>'<li data-i="'+i+'"><b>STEP '+(i+1)+'</b> – '+esc(s)+'</li>').join('');
 $('#sch').textContent=SCH[d.k]?'Schematic target location: this target is shown at an illustrative position in the cell, not a literal molecular location.':'';
 const c=LAB;$('#chain').innerHTML=c.map((x,i)=>'<span data-i="'+i+'" role="button" tabindex="0"><b>'+(i+1)+'</b> '+x+'</span>').join('');
-$('#tb').innerHTML='<b>TARGET SITE</b><div>'+esc(d.site)+'</div><b>MOLECULAR TARGET</b><div>'+esc(d.mol==NA&&IMPL.has(d.k)?LBT[d.k]+' (class-level, from the 3D mapping)':d.mol)+'</div><b>ANTIBIOTIC</b><div>'+esc(d.n)+'</div><b>MECHANISM</b><div>'+esc(d.moa)+'</div>';
+
 $('#fx').innerHTML=d.c==null?'':d.c?'BACTERICIDAL<br>↓<br>CELLULAR DAMAGE<br>↓<br>BACTERIAL DEATH':'BACTERIOSTATIC<br>↓<br>GROWTH INHIBITION';ext(d);learn(d);lastS=-1}
 function ui(){$('#pp').textContent=pb.play?'❚❚ Pause':'▶ Play';$('#sm').classList.toggle('on',pb.sm);$('#mdA').classList.toggle('on',!pb.sm);$('#mdE').classList.toggle('on',pb.sm);$('#stp').style.display=pb.sm?'flex':'none'}
 function replay(){pb.t=pb.sm?pb.st/6:0;pb.play=true;pb.auto=true;ui()}
