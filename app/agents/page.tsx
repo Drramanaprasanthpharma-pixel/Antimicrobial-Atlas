@@ -21,6 +21,10 @@ export default function AgentsPage() {
           Content transcribed directly from the source textbook table (classification, spectrum of
           activity and mechanism of resistance). This is reference material, not a substitute for
           institutional protocols or verified clinical guidance.
+          <span className="block mt-2">
+            <strong>Source:</strong> Sastry AS, Priyadarshi K, Deepashree R. <em>Essentials of
+            Antimicrobial Stewardship</em>. Jaypee Brothers.
+          </span>
         </Alert>
 
         <GlossaryPanel />

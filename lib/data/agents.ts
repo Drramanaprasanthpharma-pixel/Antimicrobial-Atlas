@@ -1,6 +1,6 @@
 // Structured data for the "Antimicrobial Agents" classification browser.
 //
-// SOURCE: transcribed directly from the user-supplied textbook table
+// SOURCE: transcribed directly from the textbook table in Sastry AS, Priyadarshi K, Deepashree R. Essentials of Antimicrobial Stewardship. Jaypee Brothers.
 // (Section 23, Table 23.1 "Antimicrobial agents - classification, indication,
 // and mechanism of resistance") and its continuation pages.
 //
