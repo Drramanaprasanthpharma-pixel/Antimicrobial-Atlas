@@ -27,6 +27,11 @@ export default function Footer() {
             <p className="text-[11px] text-ink-2/80 mt-3 font-data">
               &copy; {year} Antimicrobial Atlas
             </p>
+            <div className="mt-3 text-xs text-ink-1 leading-relaxed">
+              <p className="font-semibold text-ink-0">Dr Ramanaprasanth G</p>
+              <p>Clinical pharmacist</p>
+              <p>Department of Clinical pharmacy - SRH</p>
+            </div>
           </div>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink-1">
