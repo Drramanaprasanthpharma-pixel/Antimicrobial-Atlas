@@ -228,3 +228,7 @@ git push -u origin main
 
 No secrets, API keys, or credentials are present in this repo — there is nothing to
 scrub before pushing.
+
+## Mechanism references (3D viewer)
+
+The 3D viewer's right-hand panel has a collapsible **References** section under Mechanism / Clinical relevance. It shows only the references tied to the selected antibiotic's mechanism, with `[n]` markers beside the mechanism, downstream-effect and outcome statements. Each antibiotic's `mechanism` object (target, binding, mechanismOfAction, downstreamEffect, cellularEffect, outcome, references[]) is built from the data block between `REFDATA-BEGIN` and `REFDATA-END` in `public/atlas-3d-mechanism.html`. Records without a verified mechanism show "Mechanism reference unavailable". See `docs/mechanism-references-audit.md` for the evidence audit.
