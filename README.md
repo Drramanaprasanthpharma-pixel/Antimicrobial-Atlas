@@ -25,7 +25,7 @@ No database, authentication, or API layer is included yet — see "What's next" 
 
 The homepage (`app/page.tsx`) currently contains, in order:
 
-1. Hero — 3D bacteria scene plus a search input (the input is a visual component only; it is not wired to a results page)
+1. Hero — 3D bacteria scene
 2. Antimicrobial Stewardship — intro, goals, WHO / CDC / IDSA definition cards
 3. The 8 Ds of Antimicrobial Stewardship — interactive, click-to-expand cards
 4. AMS as a clinical decision framework — vertical pathway diagram
@@ -43,8 +43,7 @@ Only the routes below exist in the current codebase. Earlier versions of this pr
 | Route | Description |
 | --- | --- |
 | `/` | Home — see structure above |
-| `/agents` | Antimicrobial agents classification browser (searchable expand/collapse tree) with an embedded 3D mechanism-of-action viewer |
-| `/atlas-3d-mechanism.html` | Static, self-contained 3D mechanism viewer (`public/atlas-3d-mechanism.html`), embedded on `/agents` and openable full screen |
+| `/agents` | Antimicrobial agents classification browser (searchable expand/collapse tree) |
 
 Navigation: the navbar links to `/agents`; the footer links to `/agents`.
 
@@ -88,7 +87,6 @@ antimicrobial-atlas/
 │   └── data/                     # antibiotics, agents, classes, tools, ams-definitions,
 │                                 # eight-ds, ams-pathway, resources, microbiology
 └── public/
-    └── atlas-3d-mechanism.html   # Standalone 3D mechanism viewer
 ```
 
 ## Design
@@ -205,7 +203,7 @@ hard-codes antibiotic content directly; it always imports from `lib/data/*`.
 - [ ] `npm run build` succeeds; build output lists only `/` and `/agents` as app routes
 - [ ] Homepage renders: hero, AMS intro + definitions, 8 Ds, pathway flow, agents,
       empirical therapy card, antibiotic database cards, microbiology, tools, resources
-- [ ] `/agents` renders, its search box filters, and the embedded 3D viewer loads
+- [ ] `/agents` renders, its search box filters
 - [ ] Antibiotic cards show the source-verification line and references
 - [ ] No secrets or tokens in the diff
 

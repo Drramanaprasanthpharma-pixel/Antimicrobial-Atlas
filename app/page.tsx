@@ -1,5 +1,4 @@
 import Hero3D from "@/components/three/Hero3D";
-import SearchBar from "@/components/search/SearchBar";
 import AntibioticCard from "@/components/antibiotics/AntibioticCard";
 import ClassCard from "@/components/classes/ClassCard";
 import ClinicalToolCard from "@/components/tools/ClinicalToolCard";
@@ -36,10 +35,7 @@ export default function Home() {
               A structured reference for antimicrobial agents, pathogens and stewardship —
               built for clinical pharmacists, physicians, microbiologists and students.
             </p>
-            <div className="mt-8 max-w-xl">
-              <SearchBar large placeholder="Search an antibiotic, pathogen, infection, or clinical topic…" />
-            </div>
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-8">
               {popular.map((a) => (
                 <span
                   key={a.id}
