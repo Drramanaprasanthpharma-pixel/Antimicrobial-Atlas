@@ -1,5 +1,5 @@
+import Link from "next/link";
 import Hero3D from "@/components/three/Hero3D";
-import SearchBar from "@/components/search/SearchBar";
 import AntibioticCard from "@/components/antibiotics/AntibioticCard";
 import ClassCard from "@/components/classes/ClassCard";
 import ClinicalToolCard from "@/components/tools/ClinicalToolCard";
@@ -14,7 +14,7 @@ import { amsDefinitions, amsGoals } from "@/lib/data/ams-definitions";
 import { eightDs } from "@/lib/data/eight-ds";
 import { microbiologyTopics } from "@/lib/data/microbiology";
 import { resourceLinks } from "@/lib/data/resources";
-import { ShieldCheck, Microscope, Pill } from "lucide-react";
+import { ShieldCheck, Microscope, Pill, ArrowRight, Box } from "lucide-react";
 
 export default function Home() {
   const popular = antibiotics.slice(0, 4);
@@ -36,10 +36,23 @@ export default function Home() {
               A structured reference for antimicrobial agents, pathogens and stewardship —
               built for clinical pharmacists, physicians, microbiologists and students.
             </p>
-            <div className="mt-8 max-w-xl">
-              <SearchBar large placeholder="Search an antibiotic, pathogen, infection, or clinical topic…" />
+            <div className="flex flex-wrap gap-3 mt-8">
+              <Link
+                href="/agents"
+                className="inline-flex items-center gap-2 rounded-full bg-ink-0 text-white px-5 py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                Agents <ArrowRight size={16} />
+              </Link>
+              <a
+                href="/atlas-3d-mechanism.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-medium text-ink-0 hover:border-teal transition-colors"
+              >
+                <Box size={16} /> 3D Mechanism of Action
+              </a>
             </div>
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-5">
               {popular.map((a) => (
                 <span
                   key={a.id}

@@ -29,14 +29,13 @@ button:hover{background:var(--cy);border-color:var(--cy)}button:focus-visible{ou
 #err{display:none;position:absolute;inset:0;place-items:center;text-align:center;padding:30px;z-index:8;background:rgba(255,255,255,.92)}
 #panel{padding:16px;overflow:auto;border-left:2px solid #111;background:#fff;min-height:0}
 h1{font-size:22px;margin:0;letter-spacing:.02em}.cls{color:var(--cy);font-size:13px;margin-bottom:6px;font-weight:700}
-#tb{margin:8px 0 4px;border:1.5px solid #111;border-left:5px solid var(--cy);border-radius:3px;padding:8px 10px;background:#fafafa}
-#tb b{display:block;font-size:11px;letter-spacing:.08em;color:var(--cy);margin-top:6px}#tb b:first-child{margin-top:0}#tb div{font-size:14px}
 dt{color:var(--mu);font-size:12px;margin-top:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}dd{margin:0}
 .chips span{display:inline-block;margin:2px 4px 0 0;padding:2px 8px;border:1px solid #111;border-radius:3px;font-size:13px}
 .eff{color:var(--cy);font-weight:700}.eff.s{color:#111}
 ol{padding:0;margin:12px 0;list-style:none}
 ol li{padding:8px 9px;margin:4px 0;border:1px solid var(--ln);border-radius:4px;cursor:pointer;color:var(--mu);font-size:14px}
 ol li.a{border-color:var(--cy);color:#111;background:rgba(217,4,41,.08);border-left:4px solid var(--cy)}
+.cm{font-size:10px;color:var(--cy);font-weight:700;margin-left:2px}#refsb ol.rl{margin:0;padding:0;list-style:none}#refsb ol.rl li{margin:0 0 9px;font-size:12.5px;line-height:1.4}#refsb .rn{font-weight:700}#refsb .rs{color:var(--mu)}#refsb .rv{display:inline-block;font-size:11px;border:1px solid var(--ln);border-radius:3px;padding:0 5px;color:var(--mu)}#refsb .rv.ok{color:#146c2e;border-color:#146c2e}#refsb a{color:inherit;overflow-wrap:anywhere}
 .note{font-size:13px;color:var(--mu)}#dbg{font-size:11px;color:var(--mu);margin-top:8px}
 @media(max-width:860px){#app{grid-template-columns:1fr;grid-template-rows:62% 38%}#panel{border-left:0;border-top:2px solid #111;padding:12px}button{padding:7px 9px;font-size:13px}.lb{font-size:11px}#fx{top:calc(118px + env(safe-area-inset-top,0px));font-size:11px;max-width:150px}}
 #md,#ctl,#stp,#mm{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}#mm[hidden]{display:none}
@@ -67,12 +66,13 @@ button{padding:7px 8px;font-size:13px;min-height:44px}
 #fx{top:8px;right:6px;font-size:11px;max-width:150px}
 .lb{font-size:11px}
 #panel{height:auto;overflow:visible;border-left:0;border-top:2px solid #111;padding:12px 12px calc(28px + env(safe-area-inset-bottom,0px))}
-#panel h1,#panel dd,#panel dt,#tb div,#sg li,#exd dd,.chips span,#dvb,.cls,ol li,.ab{overflow-wrap:anywhere;word-break:normal}
+#panel h1,#panel dd,#panel dt,#sg li,#exd dd,.chips span,#dvb,.cls,ol li,.ab{overflow-wrap:anywhere;word-break:normal}
 h1{font-size:20px}#sg li{flex-wrap:wrap}#panel input[type=file]{max-width:100%}
 #cap{white-space:normal;max-width:calc(100% - 20px);font-size:11px}
 }
 @media (max-width:600px){
 html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+canvas{touch-action:pan-x pan-y}
 #app{display:block;height:auto;min-height:100vh;min-height:100dvh;overflow-x:hidden}
 #stage{height:clamp(240px,46vh,440px);height:clamp(240px,46dvh,440px);--bot:10px;--bot2:58px}
 body.teach #stage{height:clamp(300px,58vh,560px);height:clamp(300px,58dvh,560px)}
@@ -89,7 +89,7 @@ html,body{height:100%;overflow:hidden}
 }
 @media (pointer:coarse){button,#chain span{min-height:44px}}
 /* Sections removed from the visible panel (kept in DOM so the engine's lookups don't break) */
-#pearl,#drw,#cmpd,#qz,#ext,#dv,#dbg,#panel>p.note{display:none!important}
+#chain,#pearl,#drw,#cmpd,#qz,#ext,#dv,#dbg,#panel>p.note{display:none!important}
 .lb{transition:opacity .6s ease}
 </style></head><body>
 <div id="app"><div id="stage"><canvas id="c"></canvas><div id="lbls"></div><div id="mk" class="ov"></div>
@@ -98,9 +98,9 @@ html,body{height:100%;overflow:hidden}
 <div id="bar"><div id="md" role="group" aria-label="Mode"><button id="mdA" class="on">Auto</button><button id="mdE">Explore</button></div><div id="ctl"><button id="pp">▶ Play</button><button id="rp">↻ Replay</button><button id="zi">🔍 Zoom</button><button id="tg">🎯 Target</button><button id="lb" class="on">🏷 Labels</button><button id="mo" aria-expanded="false">⋯ More</button></div><div id="stp" style="display:none"><button id="pv">◀ Back</button><button id="nx">Next ▶</button></div><div id="mm" hidden><button id="zo">Zoom −</button><button id="rv">Reset view</button><button id="sm">Step-by-step</button><button id="tm">🎓 Teaching mode</button><button id="ex">Hide explanations</button><button id="fs">⛶ Full screen</button></div></div>
 <div id="err"><div><b id="em">3D could not start.</b><br><span class="note">The mechanism text still works; open the browser console (F12) for the exact error message.</span></div></div></div>
 <aside id="panel"><div id="sum" class="card min"></div><div id="wih" class="card" aria-live="polite"><div class="wt">🔬 WHAT IS HAPPENING?</div><div id="wtx"></div><div id="wsum" hidden></div></div><h1 id="pn"></h1><div class="cls" id="pc"></div>
-<details class="ac" open><summary>Target</summary><div class="ab"><div id="tb"></div><dl><dt>Target site</dt><dd id="p1"></dd><dt>Site of action</dt><dd id="p2"></dd><dt>Molecular target</dt><dd id="p3"></dd><dt>Bacterial structures involved</dt><dd id="p6" class="chips"></dd></dl></div></details>
 <details class="ac" open><summary>Mechanism</summary><div class="ab"><dl><dt>Mechanism of action</dt><dd id="p4"></dd><dt>Downstream effect</dt><dd id="p5"></dd><dt>Outcome</dt><dd id="p7"></dd></dl><ol id="st"></ol><p class="note" id="sch"></p></div></details>
 <details class="ac" id="why" open><summary>Why does this matter clinically?</summary><div class="ab" id="whyb"></div></details>
+<details class="ac" id="refs" open><summary>References</summary><div class="ab" id="refsb"></div></details>
 <details class="ac" id="pearl"><summary>💡 Clinical pearl</summary><div class="ab" id="pearlb"></div></details>
 <div id="drw"></div>
 <details class="ac" id="cmpd"><summary>Compare antibiotics</summary><div class="ab"><label class="note">Compare the selected antibiotic with <select id="cB"></select></label><div id="cmpb"></div></div></details>
@@ -137,6 +137,94 @@ const DB=[
 ].map(a=>({n:a[0],cls:a[1],site:a[2],sa:a[3],mol:a[4],moa:a[5],down:a[6],st:a[7].split('|'),k:a[8],c:a[9],mt:a[10],act:a[11],dmg:a[12]}));
 const LBT={pbp:'PBP (transpeptidase)',pg:'D-Ala-D-Ala / peptidoglycan precursor',lps:'LPS · outer membrane',r30:'30S ribosomal subunit',r50:'50S ribosomal subunit',gyr:'DNA gyrase / topo IV',dna:'Bacterial DNA',rna:'RNA polymerase',dhps:'DHPS enzyme',dhfr:'DHFR enzyme'};
 const SCH={pbp:1,dna:1,dhps:1,dhfr:1};
+/* ===== MECHANISM REFERENCES (mechanism-specific; every record below was looked up in PubMed by PMID and its title/authors/journal/year/DOI checked against the PubMed record. ev:'a' = abstract was read and supports the listed claims; ev:'t' = PubMed abstract unavailable, support inferred from title/MeSH only (shown as NOT abstract-verified). Nothing here is AI-generated bibliographic data; a claim without a source is listed in MGAPS and shown as unsupported. ===== */
+/*REFDATA-BEGIN*/
+const RL={
+zapun:[18248419,'Zapun A, Contreras-Martel C, Vernet T','Penicillin-binding proteins and beta-lactam resistance','FEMS Microbiol Rev',2008,'32(2):361-85','10.1111/j.1574-6976.2007.00095.x','a'],
+sauvage:[18266856,'Sauvage E, Kerff F, Terrak M, Ayala JA, Charlier P','The penicillin-binding proteins: structure and role in peptidoglycan biosynthesis','FEMS Microbiol Rev',2008,'32(2):234-58','10.1111/j.1574-6976.2008.00105.x','a'],
+oliva:[12945052,'Oliva M, Dideberg O, Field MJ','Understanding the acylation mechanisms of active-site serine penicillin-recognizing proteins: a molecular dynamics simulation study','Proteins',2003,'53(1):88-100','10.1002/prot.10450','a'],
+lee03:[14692773,'Lee M, Hesek D, Suvorov M, Lee W, Vakulenko S, Mobashery S','A mechanism-based inhibitor targeting the DD-transpeptidase activity of bacterial penicillin-binding proteins','J Am Chem Soc',2003,'125(52):16322-6','10.1021/ja038445l','a'],
+waxman:[6351730,'Waxman DJ, Strominger JL','Penicillin-binding proteins and the mechanism of action of beta-lactam antibiotics','Annu Rev Biochem',1983,'52:825-69','10.1146/annurev.bi.52.070183.004141','t'],
+tipper:[5219821,'Tipper DJ, Strominger JL','Mechanism of action of penicillins: a proposal based on their structural similarity to acyl-D-alanyl-D-alanine','Proc Natl Acad Sci U S A',1965,'54(4):1133-41','10.1073/pnas.54.4.1133','t'],
+kohanski10:[20440275,'Kohanski MA, Dwyer DJ, Collins JJ','How antibiotics kill bacteria: from targets to networks','Nat Rev Microbiol',2010,'8(6):423-35','10.1038/nrmicro2333','a'],
+yang:[7768785,'Yang Y, Bhachech N, Bush K','Biochemical comparison of imipenem, meropenem and biapenem: permeability, binding to penicillin-binding proteins, and stability to hydrolysis by beta-lactamases','J Antimicrob Chemother',1995,'35(1):75-84','10.1093/jac/35.1.75','a'],
+reynolds:[2532132,'Reynolds PE','Structure, biochemistry and mechanism of action of glycopeptide antibiotics','Eur J Clin Microbiol Infect Dis',1989,'8(11):943-50','10.1007/BF01967563','a'],
+mishra:[29930540,'Mishra NM, Stolarzewicz I, Cannaerts D, et al.','Iterative chemical engineering of vancomycin leads to novel vancomycin analogs with a high therapeutic index (background statement on vancomycin mechanism)','Front Microbiol',2018,'9:1175','10.3389/fmicb.2018.01175','a'],
+kahne:[15700951,'Kahne D, Leimkuhler C, Lu W, Walsh C','Glycopeptide and lipoglycopeptide antibiotics','Chem Rev',2005,'105(2):425-48','10.1021/cr030103a','t'],
+vlm:[30054232,'Vázquez-Laslop N, Mankin AS','How macrolide antibiotics work','Trends Biochem Sci',2018,'43(9):668-84','10.1016/j.tibs.2018.06.011','a'],
+schl:[11677599,'Schlünzen F, Zarivach R, Harms J, et al.','Structural basis for the interaction of antibiotics with the peptidyl transferase centre in eubacteria','Nature',2001,'413(6858):814-21','10.1038/35101544','a'],
+dinos:[28664582,'Dinos GP','The macrolide antibiotic renaissance','Br J Pharmacol',2017,'174(18):2967-83','10.1111/bph.13936','a'],
+brod:[11163189,'Brodersen DE, Clemons WM, Carter AP, et al.','The structural basis for the action of the antibiotics tetracycline, pactamycin, and hygromycin B on the 30S ribosomal subunit','Cell',2000,'103(7):1143-54','10.1016/s0092-8674(00)00216-6','a'],
+pio:[11296217,'Pioletti M, Schlünzen F, Harms J, et al.','Crystal structures of complexes of the small ribosomal subunit with tetracycline, edeine and IF3','EMBO J',2001,'20(8):1829-39','10.1093/emboj/20.8.1829','a'],
+chopra:[11381101,'Chopra I, Roberts M','Tetracycline antibiotics: mode of action, applications, molecular biology, and epidemiology of bacterial resistance','Microbiol Mol Biol Rev',2001,'65(2):232-60','10.1128/MMBR.65.2.232-260.2001','a'],
+carter:[11014183,'Carter AP, Clemons WM, Brodersen DE, et al.','Functional insights from the structure of the 30S ribosomal subunit and its interactions with antibiotics','Nature',2000,'407(6802):340-8','10.1038/35030019','a'],
+krause:[27252397,'Krause KM, Serio AW, Kane TR, Connolly LE','Aminoglycosides: an overview','Cold Spring Harb Perspect Med',2016,'6(6):a027029','10.1101/cshperspect.a027029','a'],
+davis:[3312985,'Davis BD','Mechanism of bactericidal action of aminoglycosides','Microbiol Rev',1987,'51(3):341-50','10.1128/mr.51.3.341-350.1987','t'],
+swaney:[9835522,'Swaney SM, Aoki H, Ganoza MC, Shinabarger DL','The oxazolidinone linezolid inhibits initiation of protein synthesis in bacteria','Antimicrob Agents Chemother',1998,'42(12):3251-5','10.1128/AAC.42.12.3251','a'],
+wilson:[18757750,'Wilson DN, Schluenzen F, Harms JM, et al.','The oxazolidinone antibiotics perturb the ribosomal peptidyl-transferase center and effect tRNA positioning','Proc Natl Acad Sci U S A',2008,'105(36):13339-44','10.1073/pnas.0804276105','a'],
+pankey:[14999632,'Pankey GA, Sabath LD','Clinical relevance of bacteriostatic versus bactericidal mechanisms of action in the treatment of Gram-positive bacterial infections','Clin Infect Dis',2004,'38(6):864-70','10.1086/381972','a'],
+hooper:[27449972,'Hooper DC, Jacoby GA','Topoisomerase inhibitors: fluoroquinolone mechanisms of action and resistance','Cold Spring Harb Perspect Med',2016,'6(9):a025320','10.1101/cshperspect.a025320','a'],
+drlica:[9293187,'Drlica K, Zhao X','DNA gyrase, topoisomerase IV, and the 4-quinolones','Microbiol Mol Biol Rev',1997,'61(3):377-92','10.1128/mmbr.61.3.377-392.1997','a'],
+aldred:[24576155,'Aldred KJ, Kerns RJ, Osheroff N','Mechanism of quinolone action and resistance','Biochemistry',2014,'53(10):1565-74','10.1021/bi5000564','a'],
+edw80:[7000306,'Edwards DI','Mechanisms of selective toxicity of metronidazole and other nitroimidazole drugs','Br J Vener Dis',1980,'56(5):285-90','10.1136/sti.56.5.285','a'],
+voogd:[6457989,'Voogd CE','On the mutagenicity of nitroimidazoles','Mutat Res',1981,'86(3):243-77','10.1016/0165-1110(81)90006-3','a'],
+edw93:[8444678,'Edwards DI','Nitroimidazole drugs--action and resistance mechanisms. I. Mechanisms of action','J Antimicrob Chemother',1993,'31(1):9-20','10.1093/jac/31.1.9','t'],
+campbell:[11290327,'Campbell EA, Korzheva N, Mustaev A, et al.','Structural mechanism for rifampicin inhibition of bacterial RNA polymerase','Cell',2001,'104(6):901-12','10.1016/s0092-8674(01)00286-0','a'],
+mcclure:[363713,'McClure WR, Cech CL','On the mechanism of rifampicin inhibition of RNA synthesis','J Biol Chem',1978,'253(24):8949-56',null,'a'],
+floss:[15700959,'Floss HG, Yu TW','Rifamycin-mode of action, resistance, and biosynthesis','Chem Rev',2005,'105(2):621-32','10.1021/cr030112j','t'],
+sabnis:[33821795,'Sabnis A, Hagart KLH, Klöckner A, et al.','Colistin kills bacteria by targeting lipopolysaccharide in the cytoplasmic membrane','eLife',2021,'10:e65836','10.7554/eLife.65836','a'],
+velkov:[19874036,'Velkov T, Thompson PE, Nation RL, Li J','Structure-activity relationships of polymyxin antibiotics','J Med Chem',2010,'53(5):1898-916','10.1021/jm900999h','t'],
+wrobel:[31578455,'Wróbel A, Arciszewska K, Maliszewski D, Drozdowska D','Trimethoprim and other nonclassical antifolates an excellent template for searching modifications of dihydrofolate reductase enzyme inhibitors','J Antibiot (Tokyo)',2020,'73(1):5-27','10.1038/s41429-019-0240-6','a'],
+thomson:[8195838,'Thomson CJ','Trimethoprim and brodimoprim resistance of gram-positive and gram-negative bacteria','J Chemother',1993,'5(6):458-64',null,'a'],
+bushby:[5301731,'Bushby SR, Hitchings GH','Trimethoprim, a sulphonamide potentiator','Br J Pharmacol Chemother',1968,'33(1):72-90','10.1111/j.1476-5381.1968.tb00475.x','t'],
+achari:[9187658,'Achari A, Somers DO, Champness JN, et al.','Crystal structure of the anti-bacterial sulfonamide drug target dihydropteroate synthase','Nat Struct Biol',1997,'4(6):490-7','10.1038/nsb0697-490','a'],
+yun:[22383850,'Yun MK, Wu Y, Li Z, et al.','Catalysis and sulfa drug resistance in dihydropteroate synthase','Science',2012,'335(6072):1110-4','10.1126/science.1214641','a']
+};
+/* claim codes: tg target · loc target location · bd binding/interaction · mx primary mechanism · dn immediate downstream effect · ce cellular consequence · oc bactericidal/bacteriostatic outcome */
+const SUPN={tg:'target',loc:'target location',bd:'binding',mx:'mechanism',dn:'downstream effect',ce:'cellular effect',oc:'outcome'};
+const BLAC=[['zapun','tg'],['sauvage','tg'],['oliva','tg,bd,mx'],['lee03','tg,mx'],['waxman','tg,bd,mx'],['tipper','bd,mx'],['kohanski10','oc']];
+const MR={
+'penicillin-g':BLAC,
+'ceftriaxone':BLAC,
+'meropenem':[['yang','tg,bd']].concat(BLAC),
+'vancomycin':[['reynolds','tg,loc,bd,mx,dn'],['mishra','tg,bd,mx'],['kahne','tg,bd,mx']],
+'azithromycin':[['vlm','tg,loc,mx,ce'],['schl','tg,bd'],['dinos','tg,mx,ce']],
+'doxycycline':[['pio','tg,bd,mx'],['brod','tg,bd'],['chopra','tg']],
+'gentamicin':[['carter','tg,bd,mx'],['krause','oc'],['davis','mx,ce,oc']],
+'linezolid':[['swaney','mx,dn'],['wilson','tg,bd,mx'],['pankey','oc']],
+'ciprofloxacin':[['hooper','tg,bd,mx,dn,ce,oc'],['drlica','tg,mx,dn,ce,oc'],['aldred','tg,mx,ce']],
+'levofloxacin':[['hooper','tg,bd,mx,dn,ce,oc'],['drlica','tg,mx,dn,ce,oc'],['aldred','tg,mx,ce']],
+'metronidazole':[['edw80','tg,mx,dn,ce,oc'],['voogd','tg,bd,dn,ce'],['edw93','mx']],
+'rifampicin':[['campbell','tg,bd,mx'],['mcclure','tg,mx,dn'],['floss','tg,mx']],
+'colistin':[['sabnis','tg,mx,oc'],['velkov','tg,mx']],
+'trimethoprim':[['wrobel','tg,mx'],['thomson','tg,mx'],['bushby','mx']],
+'sulfamethoxazole':[['achari','tg,bd,mx'],['yun','tg,mx']]
+};
+/* claims shown by the visualization that NO cited source adequately supports (displayed to the user, never silently filled) */
+const MGAPS={
+'penicillin-g':['target location (periplasm / outer face of the cytoplasmic membrane)','downstream effect (osmotic lysis)','bactericidal outcome supported only by a review-level source'],
+'ceftriaxone':['drug-specific PBP targets (cited sources are class-level β-lactam evidence)','target location','downstream effect (lysis)'],
+'meropenem':['PBP3 emphasis (cited source shows strongest binding to PBP2 of E. coli / P. aeruginosa)','target location','downstream effect (lysis)'],
+'vancomycin':['bactericidal outcome / lysis','cellular consequence'],
+'azithromycin':['azithromycin-specific ribosome structure (cited structures are other macrolides)','bacteriostatic outcome'],
+'doxycycline':['doxycycline-specific ribosome structure (cited structures are tetracycline)','bacteriostatic outcome','cellular consequence'],
+'gentamicin':['gentamicin-specific structure (cited structures are other aminoglycosides)','membrane damage → cell death (only a title-only source)','second abstract-reviewed source for the mechanism'],
+'linezolid':['P-site wording: the cited crystal structure places linezolid in the A-site pocket of the peptidyl-transferase centre','second abstract-reviewed source for the target'],
+'ciprofloxacin':['ciprofloxacin-specific structure (cited sources are class-level quinolone evidence)'],
+'levofloxacin':['levofloxacin-specific dual-targeting data (cited sources are class-level quinolone evidence)'],
+'metronidazole':['second abstract-reviewed source for the reduction-activation mechanism (only one abstract states it)','cited abstracts are older reviews; no recent primary mechanism study cited'],
+'rifampicin':['bactericidal outcome supported only by a review-level source','β-subunit/rpoB detail rests on a single abstract-reviewed structure paper'],
+'colistin':['displacement of Mg²⁺/Ca²⁺ from LPS','permeability/leakage step','second abstract-reviewed source for the target'],
+'trimethoprim':['competitive inhibition detail','folate depletion → reduced DNA synthesis','growth-inhibition outcome'],
+'sulfamethoxazole':['folate depletion → reduced DNA synthesis','growth-inhibition outcome']
+};
+/* class-level references for records that only carry a mapped 3D target (no per-drug mechanism text): shown with an explicit class-level warning, target claim only */
+const CLASSREF={pbp:['zapun','sauvage','oliva','lee03'],pg:['reynolds','mishra'],r30:['carter','pio','brod'],r50:['vlm','schl','dinos'],gyr:['hooper','drlica','aldred'],dna:['edw80','voogd'],rna:['campbell','mcclure'],dhfr:['wrobel','thomson'],dhps:['achari','yun'],lps:['sabnis']};
+function refObj(key,n,sup){const r=RL[key],doi=r[6];return{id:'REF-'+String(n).padStart(3,'0'),key,pmid:r[0],citation:r[1]+'. '+r[2]+'. '+r[3]+'. '+r[4]+';'+r[5]+'.',doi,url:doi?'https://doi.org/'+doi:'https://pubmed.ncbi.nlm.nih.gov/'+r[0]+'/',supports:sup.split(',').map(c=>SUPN[c]),codes:sup.split(','),verified:r[7]=='a',evidence:r[7]=='a'?'abstract reviewed in PubMed':'PubMed record verified; abstract unavailable — support inferred from title/MeSH only'}}
+const RKEYS=Object.keys(RL);
+function mkMech(d){const l=MR[d.drugId];if(!l)return null;return{target:d.mol,binding:d.moa,mechanismOfAction:d.act,downstreamEffect:d.down,cellularEffect:d.dmg,outcome:d.c==null?NA:d.c?'Bactericidal':'Bacteriostatic',references:l.map(x=>refObj(x[0],RKEYS.indexOf(x[0])+1,x[1])),gaps:MGAPS[d.drugId]||[]}}
+/*REFDATA-END*/
+
 /* ===== MASTER ANTIBACTERIAL DATABASE LAYER: extends DB (same object shape the 3D engine already reads). Records come from AtlasDB.load() or the import box; nothing is invented ===== */
 const NA='Not available',esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 /* mechanismVisualization type -> engine key. Types not listed are NOT animated: the record shows its text and "3D visualization under development" */
@@ -147,7 +235,7 @@ function idx(d){d.route=arr(d.route);d.dddRoutes=arr(d.dddRoutes);d.brandNames=a
 d._f={class:[d.cls],subclass:arr(d.subclass),target:[d.mol],mech:d.viz,route:[...new Set([...d.route,...d.dddRoutes])],group:[d.atcGroup].filter(Boolean),kill:d.c==null?[]:[d.c?'Bactericidal':'Bacteriostatic'],market:mkt(d.marketAvailability),atc:d.atc?[String(d.atc).slice(0,5)]:[]};
 d._s=[d.n,d.drugId,d.brandNames.join(' '),d.cls,arr(d.subclass).join(' '),d.atcGroup,d.mol,d.site,d.viz.join(' '),d.viz.join(' ').replace(/_/g,' '),d.atc,arr(d.components).join(' '),LBT[d.k]].filter(Boolean).join(' | ').toLowerCase()}
 const IDS=new Set();
-DB.forEach(d=>{d.drugId=slug(d.n);d.genericName=d.n;d.src='built-in';d.viz=REV[d.k]?[REV[d.k]]:[];IDS.add(d.drugId);idx(d)});
+DB.forEach(d=>{d.drugId=slug(d.n);d.genericName=d.n;d.src='built-in';d.viz=REV[d.k]?[REV[d.k]]:[];IDS.add(d.drugId);d.mechanism=mkMech(d);idx(d)});
 function adapt(r,src){if(!r||typeof r!='object')return{err:'record is not an object'};const nm=r.genericName||r.name;if(!nm)return{err:'missing genericName'};const id=r.drugId||slug(nm);if(IDS.has(id))return{err:'duplicate drugId: '+id};
 const vt=arr(r.mechanismVisualization),im=vt.find(v=>VIZ[v]),k=im?VIZ[im]:'dev:'+id,iss=[];
 if(!im)iss.push(vt.length?'visualization not implemented: '+vt.join(', '):'no mechanismVisualization');if(!arr(r.references).length)iss.push('no references');if(!r.lastVerified)iss.push('no lastVerified');
@@ -174,13 +262,25 @@ function derive(t){V.t=t;V.hl=ease(t,0,.05);V.bind=ease(t,.38,.55);V.inh=ease(t,
 V.focus=sm(ph(t,0,.14))*(1-sm(ph(t,.94,1)));let s=0;for(let i=0;i<48;i++)s+=1-ease((i+.5)/48*t,.55,.75);V.proc=s*t/48*DUR}
 /* ===== UI ===== */
 const q=$('#q'),sg=$('#sg');
-function fill(){const d=V.d;$('#pn').textContent=d.n.toUpperCase();$('#pc').textContent=d.cls;$('#p1').textContent=d.site;$('#p2').textContent=d.sa;$('#p3').textContent=d.mol;$('#p4').textContent=d.moa;$('#p5').textContent=d.down;
-$('#p6').innerHTML=d.st.map(s=>'<span>'+esc(s)+'</span>').join('');$('#p7').innerHTML=d.c==null?'<span class="eff s">Bactericidal / bacteriostatic classification not available</span>':d.c?'<span class="eff">Bactericidal – bacterial cell death</span>':'<span class="eff s">Bacteriostatic – bacterial growth inhibited</span>';
+function fill(){const d=V.d;$('#pn').textContent=d.n.toUpperCase();$('#pc').textContent=d.cls;$('#p4').textContent=d.moa;$('#p5').textContent=d.down;
+$('#p7').innerHTML=d.c==null?'<span class="eff s">Bactericidal / bacteriostatic classification not available</span>':d.c?'<span class="eff">Bactericidal – bacterial cell death</span>':'<span class="eff s">Bacteriostatic – bacterial growth inhibited</span>';
 $('#st').innerHTML=steps(d).map((s,i)=>'<li data-i="'+i+'"><b>STEP '+(i+1)+'</b> – '+esc(s)+'</li>').join('');
 $('#sch').textContent=SCH[d.k]?'Schematic target location: this target is shown at an illustrative position in the cell, not a literal molecular location.':'';
 const c=LAB;$('#chain').innerHTML=c.map((x,i)=>'<span data-i="'+i+'" role="button" tabindex="0"><b>'+(i+1)+'</b> '+x+'</span>').join('');
-$('#tb').innerHTML='<b>TARGET SITE</b><div>'+esc(d.site)+'</div><b>MOLECULAR TARGET</b><div>'+esc(d.mol==NA&&IMPL.has(d.k)?LBT[d.k]+' (class-level, from the 3D mapping)':d.mol)+'</div><b>ANTIBIOTIC</b><div>'+esc(d.n)+'</div><b>MECHANISM</b><div>'+esc(d.moa)+'</div>';
-$('#fx').innerHTML=d.c==null?'':d.c?'BACTERICIDAL<br>↓<br>CELLULAR DAMAGE<br>↓<br>BACTERIAL DEATH':'BACTERIOSTATIC<br>↓<br>GROWTH INHIBITION';ext(d);learn(d);lastS=-1}
+
+$('#fx').innerHTML=d.c==null?'':d.c?'BACTERICIDAL<br>↓<br>CELLULAR DAMAGE<br>↓<br>BACTERIAL DEATH':'BACTERIOSTATIC<br>↓<br>GROWTH INHIBITION';ext(d);learn(d);refsUI(d);lastS=-1}
+/* mechanism-specific References panel: renders only the references that belong to the selected antibiotic's mechanism */
+function refsUI(d){const box=$('#refsb');if(!box)return;const m=d.mechanism;let list=[],cls=false,h='';
+document.querySelectorAll('#panel sup.cm').forEach(x=>x.remove());
+if(m)list=m.references;else if(IMPL.has(d.k)&&CLASSREF[d.k]){cls=true;list=CLASSREF[d.k].map(k=>refObj(k,RKEYS.indexOf(k)+1,'tg'))}
+if(!list.length){box.innerHTML='<p class="note">Mechanism reference unavailable.</p>';return}
+const rg=n=>{const o=[];for(let i=0;i<n.length;){let j=i;while(j+1<n.length&&n[j+1]==n[j]+1)j++;o.push(j-i>=2?n[i]+'–'+n[j]:n.slice(i,j+1).join(','));i=j+1}return o.join(',')};
+const mk=(el,codes)=>{const n=list.map((r,i)=>r.codes.some(c=>codes.includes(c))?i+1:0).filter(Boolean);if(el&&n.length)el.insertAdjacentHTML('beforeend','<sup class="cm">['+rg(n)+']</sup>')};
+if(!cls){mk($('#p4'),['tg','bd','mx']);mk($('#p5'),['dn','ce']);mk($('#p7'),['oc'])}
+if(cls)h+='<p class="note">Class-level mapping: these sources support the animated target class only. They have not been verified for this specific drug, and no drug-specific mechanism statement is stored for it.</p>';
+h+='<ol class="rl">'+list.map((r,i)=>'<li><span class="rn">['+(i+1)+']</span> '+esc(r.citation)+' <a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer">'+(r.doi?'doi:'+esc(r.doi):'PubMed '+r.pmid)+'</a> <span class="rs">Supports: '+esc(r.supports.join(', '))+'.</span> '+(r.verified?'<span class="rv ok">✓ abstract reviewed</span>':'<span class="rv">title-only; not abstract-verified</span>')+'</li>').join('')+'</ol>';
+if(m&&m.gaps.length)h+='<p class="note"><b>Not supported by the cited sources:</b> '+m.gaps.map(esc).join('; ')+'.</p>';
+box.innerHTML=h}
 function ui(){$('#pp').textContent=pb.play?'❚❚ Pause':'▶ Play';$('#sm').classList.toggle('on',pb.sm);$('#mdA').classList.toggle('on',!pb.sm);$('#mdE').classList.toggle('on',pb.sm);$('#stp').style.display=pb.sm?'flex':'none'}
 function replay(){pb.t=pb.sm?pb.st/6:0;pb.play=true;pb.auto=true;ui()}
 function pick(i){V.d=DB[i];pb.st=0;q.value=DB[i].n;dd.style.display='none';q.blur();fill();$('#sum').classList.remove('min');replay()}
@@ -348,11 +448,19 @@ const dvn=document.createElement('div');dvn.id='dvn';dvn.className='ov';dvn.text
 const at=(p,e,dx,dy)=>{const q=P(p);if(!q){e.style.display='none';return null}e.style.display='';e.style.left=(q[0]+(dx||0))+'px';e.style.top=(q[1]+(dy||0))+'px';return q};
 /* ---- controls: drag to rotate, pinch / wheel to zoom ---- */
 const ptr=new Map();let pd=0;const zoomBy=f=>{C.dist=Math.min(20,Math.max(.5,C.dist*f))},d2=()=>{const a=[...ptr.values()];return Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1])};
-cv.addEventListener('pointerdown',e=>{try{cv.setPointerCapture(e.pointerId)}catch(_){}ptr.set(e.pointerId,[e.clientX,e.clientY]);pb.auto=false;resetUntil=0;if(ptr.size==2)pd=d2()});
+/* Touch arbitration: where the page itself scrolls (stacked phone layout) the canvas is touch-action:pan-x pan-y, so ONE finger always scrolls the page in any direction (a 'pan-y'-only canvas still captured every swipe flatter than ~45 degrees as a rotate, which is what made scrolling feel stuck). There rotation/zoom use TWO fingers. Where nothing scrolls (touch-action:none) and for mouse/pen, one pointer rotates as before. */
+const mid=()=>{const a=[...ptr.values()];return[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2]};let pm=null;
+const scrolls=()=>getComputedStyle(cv).touchAction!=='none';
+cv.addEventListener('pointerdown',e=>{ptr.set(e.pointerId,[e.clientX,e.clientY]);const tw=e.pointerType==='touch'&&scrolls();
+if(!tw){try{cv.setPointerCapture(e.pointerId)}catch(_){}pb.auto=false;resetUntil=0}
+if(ptr.size==2){pb.auto=false;resetUntil=0;pd=d2();pm=mid()}});
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p[0],dy=e.clientY-p[1];ptr.set(e.pointerId,[e.clientX,e.clientY]);
+if(e.pointerType==='touch'&&scrolls()){if(ptr.size==2){const n=d2(),m=mid();if(pd)zoomBy(pd/n);pd=n;if(pm){C.yaw-=(m[0]-pm[0])*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+(m[1]-pm[1])*.006))}pm=m}return}
 if(ptr.size==1){C.yaw-=dx*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+dy*.006))}else if(ptr.size==2){const n=d2();if(pd)zoomBy(pd/n);pd=n}});
-['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0}));
-cv.addEventListener('wheel',e=>{e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89)},{passive:false});
+['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0;pm=null}));
+/* Scroll fix: a plain wheel/trackpad scroll over the 3D stage used to be swallowed (preventDefault) for zoom, so the page/panel appeared stuck. Now only Ctrl/⌘+wheel (and trackpad pinch, which reports ctrlKey) zooms; a plain wheel scrolls the side panel (or the page in the stacked mobile layout). Zoom buttons and touch pinch still work. */
+stage.addEventListener('wheel',e=>{if(e.target.closest&&e.target.closest('#dd'))return;if(e.ctrlKey||e.metaKey){e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89);return}
+const p=$('#panel');if(p&&p.scrollHeight>p.clientHeight&&getComputedStyle(p).overflowY!=='visible'){const t=p.scrollTop;p.scrollTop+=e.deltaY*(e.deltaMode==1?16:e.deltaMode==2?p.clientHeight:1);if(p.scrollTop!==t)e.preventDefault()}},{passive:false});
 $('#zi').onclick=()=>{pb.auto=false;zoomBy(.78)};$('#zo').onclick=()=>{pb.auto=false;zoomBy(1.28)};$('#rv').onclick=()=>{pb.auto=false;resetUntil=performance.now()+1400};
 /* ---- frame ---- */
 let T=0,TA=0,last=performance.now(),first=true,errs=0;
