@@ -72,6 +72,7 @@ h1{font-size:20px}#sg li{flex-wrap:wrap}#panel input[type=file]{max-width:100%}
 }
 @media (max-width:600px){
 html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+canvas{touch-action:pan-y}
 #app{display:block;height:auto;min-height:100vh;min-height:100dvh;overflow-x:hidden}
 #stage{height:clamp(240px,46vh,440px);height:clamp(240px,46dvh,440px);--bot:10px;--bot2:58px}
 body.teach #stage{height:clamp(300px,58vh,560px);height:clamp(300px,58dvh,560px)}
@@ -451,7 +452,9 @@ cv.addEventListener('pointerdown',e=>{try{cv.setPointerCapture(e.pointerId)}catc
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p[0],dy=e.clientY-p[1];ptr.set(e.pointerId,[e.clientX,e.clientY]);
 if(ptr.size==1){C.yaw-=dx*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+dy*.006))}else if(ptr.size==2){const n=d2();if(pd)zoomBy(pd/n);pd=n}});
 ['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0}));
-cv.addEventListener('wheel',e=>{e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89)},{passive:false});
+/* Scroll fix: a plain wheel/trackpad scroll over the 3D stage used to be swallowed (preventDefault) for zoom, so the page/panel appeared stuck. Now only Ctrl/⌘+wheel (and trackpad pinch, which reports ctrlKey) zooms; a plain wheel scrolls the side panel (or the page in the stacked mobile layout). Zoom buttons and touch pinch still work. */
+stage.addEventListener('wheel',e=>{if(e.target.closest&&e.target.closest('#dd'))return;if(e.ctrlKey||e.metaKey){e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89);return}
+const p=$('#panel');if(p&&p.scrollHeight>p.clientHeight&&getComputedStyle(p).overflowY!=='visible'){const t=p.scrollTop;p.scrollTop+=e.deltaY*(e.deltaMode==1?16:e.deltaMode==2?p.clientHeight:1);if(p.scrollTop!==t)e.preventDefault()}},{passive:false});
 $('#zi').onclick=()=>{pb.auto=false;zoomBy(.78)};$('#zo').onclick=()=>{pb.auto=false;zoomBy(1.28)};$('#rv').onclick=()=>{pb.auto=false;resetUntil=performance.now()+1400};
 /* ---- frame ---- */
 let T=0,TA=0,last=performance.now(),first=true,errs=0;
