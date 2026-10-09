@@ -449,17 +449,17 @@ const at=(p,e,dx,dy)=>{const q=P(p);if(!q){e.style.display='none';return null}e.
 /* ---- controls: drag to rotate, pinch / wheel to zoom ---- */
 const ptr=new Map();let pd=0;const zoomBy=f=>{C.dist=Math.min(20,Math.max(.5,C.dist*f))},d2=()=>{const a=[...ptr.values()];return Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1])};
 /* On the stacked phone layout, vertical one-finger movement remains native page scrolling; horizontal one-finger movement rotates. */
-const mid=()=>{const a=[...ptr.values()];return[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2]};let pm=null,st=null,sm=null;
+const mid=()=>{const a=[...ptr.values()];return[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2]};let pm=null,st=null,touchMode=null;
 const scrolls=()=>getComputedStyle(cv).touchAction!=='none';
 cv.addEventListener('pointerdown',e=>{ptr.set(e.pointerId,[e.clientX,e.clientY]);const tw=e.pointerType==='touch'&&scrolls();
 if(!tw){try{cv.setPointerCapture(e.pointerId)}catch(_){}pb.auto=false;resetUntil=0}
-if(tw&&ptr.size==1){st=[e.clientX,e.clientY];sm=null}
-if(ptr.size==2){pb.auto=false;resetUntil=0;pd=d2();pm=mid();st=null;sm=null}});
+if(tw&&ptr.size==1){st=[e.clientX,e.clientY];touchMode=null}
+if(ptr.size==2){pb.auto=false;resetUntil=0;pd=d2();pm=mid();st=null;touchMode=null}});
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p[0],dy=e.clientY-p[1];ptr.set(e.pointerId,[e.clientX,e.clientY]);
 if(e.pointerType==='touch'&&scrolls()){if(ptr.size==2){const n=d2(),m=mid();if(pd)zoomBy(pd/n);pd=n;if(pm){C.yaw-=(m[0]-pm[0])*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+(m[1]-pm[1])*.006))}pm=m}
-else if(ptr.size==1&&st){const tx=e.clientX-st[0],ty=e.clientY-st[1];if(!sm&&Math.hypot(tx,ty)>=6)sm=Math.abs(tx)>Math.abs(ty)?'rotate':'scroll';if(sm==='rotate'){C.yaw-=dx*.006;pb.auto=false;resetUntil=0}}return}
+else if(ptr.size==1&&st){const tx=e.clientX-st[0],ty=e.clientY-st[1];if(!touchMode&&Math.hypot(tx,ty)>=6)touchMode=Math.abs(tx)>Math.abs(ty)?'rotate':'scroll';if(touchMode==='rotate'){C.yaw-=dx*.006;pb.auto=false;resetUntil=0}}return}
 if(ptr.size==1){C.yaw-=dx*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+dy*.006))}else if(ptr.size==2){const n=d2();if(pd)zoomBy(pd/n);pd=n}});
-['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0;pm=null;if(ptr.size==1){st=[...ptr.values()][0];sm=null}else{st=null;sm=null}}));
+['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0;pm=null;if(ptr.size==1){st=[...ptr.values()][0];touchMode=null}else{st=null;touchMode=null}}));
 /* Scroll fix: a plain wheel/trackpad scroll over the 3D stage used to be swallowed (preventDefault) for zoom, so the page/panel appeared stuck. Now only Ctrl/⌘+wheel (and trackpad pinch, which reports ctrlKey) zooms; a plain wheel scrolls the side panel (or the page in the stacked mobile layout). Zoom buttons and touch pinch still work. */
 stage.addEventListener('wheel',e=>{if(e.target.closest&&e.target.closest('#dd'))return;if(e.ctrlKey||e.metaKey){e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89);return}
 const p=$('#panel');if(p&&p.scrollHeight>p.clientHeight&&getComputedStyle(p).overflowY!=='visible'){const t=p.scrollTop;p.scrollTop+=e.deltaY*(e.deltaMode==1?16:e.deltaMode==2?p.clientHeight:1);if(p.scrollTop!==t)e.preventDefault()}},{passive:false});
