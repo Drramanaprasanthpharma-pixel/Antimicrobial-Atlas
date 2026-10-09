@@ -20,14 +20,13 @@ export default function Footer() {
           </span>
           <div>
             <p className="font-display text-sm font-semibold text-ink-0">Antimicrobial Atlas</p>
-            <p className="text-[11px] text-ink-2/80 mt-1.5 font-data">
+            <p className="text-xs text-ink-2 mt-1.5 leading-relaxed">
+              Frontend scaffold with demo/placeholder clinical content. Not a substitute for
+              institutional protocols or verified clinical references.
+            </p>
+            <p className="text-[11px] text-ink-2/80 mt-3 font-data">
               &copy; {year} Antimicrobial Atlas
             </p>
-            <div className="mt-3 text-xs text-ink-1 leading-relaxed">
-              <p className="font-semibold text-ink-0">Dr Ramanaprasanth G</p>
-              <p>Clinical pharmacist</p>
-              <p>Department of Clinical pharmacy - SRH</p>
-            </div>
           </div>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink-1">

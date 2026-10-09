@@ -1,18 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown, Pill, Shield, Target } from "lucide-react";
+import SearchBar from "@/components/search/SearchBar";
 import Badge from "@/components/ui/Badge";
 import { MajorSection, Subclass } from "@/lib/data/agents";
+
+function subclassMatches(sc: Subclass, term: string): boolean {
+  const haystack = [
+    sc.classMechanism,
+    sc.mechanismNote ?? "",
+    ...sc.variants.flatMap((v) => [v.label ?? "", ...v.drugs, ...v.spectrumOfActivity]),
+    ...sc.mechanismOfResistance,
+  ]
+    .join(" ")
+    .toLowerCase();
+  return haystack.includes(term);
+}
 
 function drugCount(sc: Subclass): number {
   return sc.variants.reduce((sum, v) => sum + v.drugs.length, 0);
 }
 
 export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
+  const [search, setSearch] = useState("");
   const [openSections, setOpenSections] = useState<Set<string>>(new Set([data[0]?.id]));
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
   const [openSubclasses, setOpenSubclasses] = useState<Set<string>>(new Set());
+
+  const term = search.trim().toLowerCase();
+  const searching = term.length > 0;
+
+  const filtered = useMemo(() => {
+    if (!searching) return data;
+    return data
+      .map((section) => ({
+        ...section,
+        classGroups: section.classGroups
+          .map((group) => ({
+            ...group,
+            subclasses: group.subclasses.filter((sc) => subclassMatches(sc, term)),
+          }))
+          .filter((group) => group.subclasses.length > 0),
+      }))
+      .filter((section) => section.classGroups.length > 0);
+  }, [data, searching, term]);
 
   function toggle(set: Set<string>, setter: (s: Set<string>) => void, id: string) {
     const next = new Set(set);
@@ -23,9 +55,14 @@ export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <SearchBar
+        placeholder="Search drugs, classes or subclasses…"
+        onSearch={setSearch}
+      />
+
       <div className="flex flex-col gap-4">
-        {data.map((section) => {
-          const isOpen = openSections.has(section.id);
+        {filtered.map((section) => {
+          const isOpen = searching || openSections.has(section.id);
           return (
             <div key={section.id} className="glass-card-static overflow-hidden">
               <span className="accent-bar accent-bar-classes" aria-hidden />
@@ -49,7 +86,7 @@ export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
               {isOpen && (
                 <div className="px-5 pb-5 flex flex-col gap-3">
                   {section.classGroups.map((group) => {
-                    const groupOpen = openGroups.has(group.id);
+                    const groupOpen = searching || openGroups.has(group.id);
                     return (
                       <div key={group.id} className="rounded-2xl border border-line bg-panel-2/40">
                         <button
@@ -77,7 +114,7 @@ export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
                         {groupOpen && (
                           <div className="px-4 pb-4 flex flex-col gap-2.5">
                             {group.subclasses.map((sc) => {
-                              const scOpen = openSubclasses.has(sc.id);
+                              const scOpen = searching || openSubclasses.has(sc.id);
                               const count = drugCount(sc);
                               return (
                                 <div key={sc.id} className="rounded-xl border border-line bg-black/[0.035] overflow-hidden">
@@ -169,6 +206,12 @@ export default function AgentsExplorer({ data }: { data: MajorSection[] }) {
             </div>
           );
         })}
+
+        {filtered.length === 0 && (
+          <div className="glass-card-static p-8 text-center text-sm text-ink-2">
+            No matching drugs, classes or subclasses found.
+          </div>
+        )}
       </div>
     </div>
   );
