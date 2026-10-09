@@ -4,12 +4,14 @@
 <title>Antimicrobial Atlas – 3D Mechanism of Action</title>
 <style>
 :root{--bg:#fff;--cy:#d90429;--rd:#d90429;--tx:#111;--mu:#555;--gl:rgba(255,255,255,.95);--ln:rgba(17,17,17,.28)}
-*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "Times New Roman",Times,serif;overscroll-behavior:none}
-#app{display:grid;grid-template-columns:1fr 360px;height:100vh;height:100dvh}
-#stage{position:relative;overflow:hidden;min-height:0;background:radial-gradient(ellipse at 50% 42%,#ffffff,#e8eaed 78%)}
+*{box-sizing:border-box}html,body{min-height:100%;margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "Times New Roman",Times,serif}
+#app{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:100vh;min-height:100dvh}
+#stage{position:relative;overflow:hidden;height:100vh;height:100dvh;min-height:320px;background:radial-gradient(ellipse at 50% 42%,#ffffff,#e8eaed 78%)}
 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
-#top{position:absolute;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top,0px));z-index:5}
-#sw{position:relative;max-width:420px}
+#top{position:absolute;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top,0px));z-index:5;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+#sw{position:relative;max-width:420px;flex:1}
+#home{flex:none;padding:8px 10px;border:1px solid #111;border-radius:5px;background:#fff;color:#111;text-decoration:none;font-weight:700;min-height:38px}
+#home:hover{background:var(--cy);border-color:var(--cy);color:#fff}
 #q{width:100%;font:inherit;color:var(--tx);background:#fff;border:1.5px solid #111;border-radius:6px;padding:10px 12px}
 #q:focus{outline:2px solid var(--cy)}
 #dd{display:none;position:absolute;left:0;right:0;top:100%;margin:4px 0 0;max-height:62vh;overflow:auto;background:#fff;border:1.5px solid #111;border-radius:6px;z-index:9}#sg{margin:0;padding:4px;list-style:none}#flt{padding:6px 10px;border-bottom:1px solid var(--ln)}#flt summary,#dv summary,#ext summary{cursor:pointer;font-weight:700;font-size:14px}#fb{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}#fb label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--mu)}#fb select{width:100%;font:inherit;font-size:13px;padding:3px;border:1px solid #111;border-radius:3px;background:#fff;color:#111;text-transform:none}#fb button{grid-column:1/3;min-height:30px;padding:4px}#sg li.cnt,#sg li.more{color:var(--mu);font-size:13px;font-style:italic}#sg li.more{cursor:pointer;color:var(--cy);font-weight:700}.na{color:#888;font-style:italic}#dv,#ext{margin-top:10px;border-top:1px solid var(--ln);padding-top:6px}#dvb{font-size:13px;margin:6px 0}#dvn{display:none;left:50%;transform:translateX(-50%);bottom:58px;white-space:normal;text-align:center;max-width:90%;background:#111;color:#fff;border-left:4px solid var(--cy);padding:6px 12px;border-radius:3px;font-weight:700;font-size:13px}
@@ -27,7 +29,7 @@ button:hover{background:var(--cy);border-color:var(--cy)}button:focus-visible{ou
 #mk{padding:5px 9px;border-radius:4px;background:#fff;border:1.5px solid var(--cy);box-shadow:0 1px 8px rgba(217,4,41,.4);font-weight:700;font-size:13px;text-align:center;color:#111}
 #mk small{display:block;color:var(--cy);font-weight:700}
 #err{display:none;position:absolute;inset:0;place-items:center;text-align:center;padding:30px;z-index:8;background:rgba(255,255,255,.92)}
-#panel{padding:16px;overflow:auto;border-left:2px solid #111;background:#fff;min-height:0}
+#panel{padding:16px;overflow:visible;border-left:2px solid #111;background:#fff}
 h1{font-size:22px;margin:0;letter-spacing:.02em}.cls{color:var(--cy);font-size:13px;margin-bottom:6px;font-weight:700}
 dt{color:var(--mu);font-size:12px;margin-top:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}dd{margin:0}
 .chips span{display:inline-block;margin:2px 4px 0 0;padding:2px 8px;border:1px solid #111;border-radius:3px;font-size:13px}
@@ -37,7 +39,7 @@ ol li{padding:8px 9px;margin:4px 0;border:1px solid var(--ln);border-radius:4px;
 ol li.a{border-color:var(--cy);color:#111;background:rgba(217,4,41,.08);border-left:4px solid var(--cy)}
 .cm{font-size:10px;color:var(--cy);font-weight:700;margin-left:2px}#refsb ol.rl{margin:0;padding:0;list-style:none}#refsb ol.rl li{margin:0 0 9px;font-size:12.5px;line-height:1.4}#refsb .rn{font-weight:700}#refsb .rs{color:var(--mu)}#refsb .rv{display:inline-block;font-size:11px;border:1px solid var(--ln);border-radius:3px;padding:0 5px;color:var(--mu)}#refsb .rv.ok{color:#146c2e;border-color:#146c2e}#refsb a{color:inherit;overflow-wrap:anywhere}
 .note{font-size:13px;color:var(--mu)}#dbg{font-size:11px;color:var(--mu);margin-top:8px}
-@media(max-width:860px){#app{grid-template-columns:1fr;grid-template-rows:62% 38%}#panel{border-left:0;border-top:2px solid #111;padding:12px}button{padding:7px 9px;font-size:13px}.lb{font-size:11px}#fx{top:calc(118px + env(safe-area-inset-top,0px));font-size:11px;max-width:150px}}
+@media(max-width:860px){#app{grid-template-columns:1fr;grid-template-rows:auto auto}#stage{height:70vh;height:70dvh}#panel{border-left:0;border-top:2px solid #111;padding:12px}button{padding:7px 9px;font-size:13px}.lb{font-size:11px}#fx{top:calc(118px + env(safe-area-inset-top,0px));font-size:11px;max-width:150px}}
 #md,#ctl,#stp,#mm{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}#mm[hidden]{display:none}
 #md button{background:#fff;color:#111}#md button.on{background:var(--cy);color:#fff;border-color:var(--cy)}
 #chain span{pointer-events:auto;cursor:pointer}#chain span.dn{border-color:#111;color:#111}#chain span:focus-visible{outline:2px solid var(--cy)}
@@ -56,6 +58,7 @@ body.teach .lb{font-size:16px}body.teach #wtx{font-size:19px}body.teach #panel{f
 #top,#chain,#bar{position:static;left:auto;right:auto;top:auto;bottom:auto;z-index:auto}
 #top{padding:calc(8px + env(safe-area-inset-top,0px)) 8px 4px;background:#fff}
 #sw{max-width:none}
+#home{min-height:44px}
 #dd{position:static;margin:6px 0 0;max-height:50vh;max-height:50dvh}
 #chain{display:flex;flex-wrap:nowrap;gap:3px;padding:2px 8px 6px;background:#fff;pointer-events:auto;font-size:11px}
 #chain span{flex:1 1 0;min-width:0;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;white-space:normal;padding:2px 3px;overflow-wrap:anywhere}
@@ -71,29 +74,22 @@ h1{font-size:20px}#sg li{flex-wrap:wrap}#panel input[type=file]{max-width:100%}
 #cap{white-space:normal;max-width:calc(100% - 20px);font-size:11px}
 }
 @media (max-width:600px){
-html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html,body{height:auto;min-height:100%;overflow-x:hidden}
 canvas{touch-action:pan-y}
-#app{display:block;height:auto;min-height:100vh;min-height:100dvh;overflow-x:clip}
+#app{display:block;min-height:100vh;min-height:100dvh;overflow-x:clip}
 #stage{height:clamp(240px,46vh,440px);height:clamp(240px,46dvh,440px);--bot:10px;--bot2:58px}
 body.teach #stage{height:clamp(300px,58vh,560px);height:clamp(300px,58dvh,560px)}
 #top #sum{margin:6px 0 0}#wih{margin:8px}#panel #pn,#panel #pc{display:none}
 }
 @media (max-width:400px){#fb{grid-template-columns:1fr}#fb button{grid-column:1}.cg{grid-template-columns:62px 1fr 1fr}.sn{font-size:18px}}
 @media (min-width:601px){#sum .sn,#sum .sc,#sum .shd #stg{display:none}#sum.min .sb{display:block}#sum .shd{display:none}}
-@media (orientation:landscape) and (max-height:500px) and (min-width:601px){
-html,body{height:100%;overflow:hidden}
-#app{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh}
-#top{grid-column:1;grid-row:1}#stage{grid-column:1;grid-row:2;height:auto;min-height:0;--bot:10px;--bot2:58px}
-#panel{grid-column:2;grid-row:1/3;overflow:auto;border-left:2px solid #111;border-top:0;padding:10px}
-#panel #chain,#panel #bar{margin:0 0 8px;padding:0;border:0;background:transparent}
-}
-@media (pointer:coarse){button,#chain span{min-height:44px}}
+@media (pointer:coarse){canvas{touch-action:pan-y}button,#chain span{min-height:44px}}
 /* Sections removed from the visible panel (kept in DOM so the engine's lookups don't break) */
 #chain,#pearl,#drw,#cmpd,#qz,#ext,#dv,#dbg,#panel>p.note{display:none!important}
 .lb{transition:opacity .6s ease}
 </style></head><body>
 <div id="app"><div id="stage"><canvas id="c"></canvas><div id="lbls"></div><div id="mk" class="ov"></div>
-<div id="top"><div id="sw"><input id="q" type="search" placeholder="Search name, brand, class, target or ATC code (e.g. Meropenem)…" autocomplete="off" aria-label="Search antibiotic"><div id="dd"><details id="flt"><summary>Filters</summary><div id="fb"></div></details><ul id="sg"></ul></div></div></div>
+<div id="top"><div id="sw"><input id="q" type="search" placeholder="Search name, brand, class, target or ATC code (e.g. Meropenem)…" autocomplete="off" aria-label="Search antibiotic"><div id="dd"><details id="flt"><summary>Filters</summary><div id="fb"></div></details><ul id="sg"></ul></div></div><a id="home" href="/" aria-label="Return to Antimicrobial Atlas homepage">← Atlas Home</a></div>
 <div id="chain"></div><div id="fx" class="ov"></div>
 <div id="bar"><div id="md" role="group" aria-label="Mode"><button id="mdA" class="on">Auto</button><button id="mdE">Explore</button></div><div id="ctl"><button id="pp">▶ Play</button><button id="rp">↻ Replay</button><button id="zi">🔍 Zoom</button><button id="tg">🎯 Target</button><button id="lb" class="on">🏷 Labels</button><button id="mo" aria-expanded="false">⋯ More</button></div><div id="stp" style="display:none"><button id="pv">◀ Back</button><button id="nx">Next ▶</button></div><div id="mm" hidden><button id="zo">Zoom −</button><button id="rv">Reset view</button><button id="sm">Step-by-step</button><button id="tm">🎓 Teaching mode</button><button id="ex">Hide explanations</button><button id="fs">⛶ Full screen</button></div></div>
 <div id="err"><div><b id="em">3D could not start.</b><br><span class="note">The mechanism text still works; open the browser console (F12) for the exact error message.</span></div></div></div>
@@ -447,7 +443,7 @@ capEl.textContent=MO[d.n]?mo.o+' · '+MN[mo.m]+' · Gram-'+(g?'positive':'negati
 const dvn=document.createElement('div');dvn.id='dvn';dvn.className='ov';dvn.textContent='3D visualization under development — the existing textual mechanism is shown in the panel';stage.appendChild(dvn);const fxe=$('#fx'),mk=$('#mk'),dl=document.createElement('div');dl.className='ov';dl.style.cssText='padding:4px 10px;border-radius:4px;background:#fff;color:#111;border:1.5px solid #d90429;box-shadow:0 1px 6px rgba(217,4,41,.4);font-weight:700;font-size:13px;border-radius:4px;transform:translate(-50%,-100%)';$('#lbls').appendChild(dl);
 const at=(p,e,dx,dy)=>{const q=P(p);if(!q){e.style.display='none';return null}e.style.display='';e.style.left=(q[0]+(dx||0))+'px';e.style.top=(q[1]+(dy||0))+'px';return q};
 /* ---- controls: drag to rotate, pinch / wheel to zoom ---- */
-const ptr=new Map();let pd=0;const zoomBy=f=>{C.dist=Math.min(20,Math.max(.5,C.dist*f))},d2=()=>{const a=[...ptr.values()];return Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1])};
+const ptr=new Map();let pd=0;const zoomBy=f=>{if(Number.isFinite(f)&&f>0)C.dist=Math.min(20,Math.max(.5,C.dist*f))},d2=()=>{const a=[...ptr.values()];return Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1])};
 /* On the stacked phone layout, vertical one-finger movement remains native page scrolling; horizontal one-finger movement rotates. */
 const mid=()=>{const a=[...ptr.values()];return[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2]};let pm=null,st=null,touchMode=null;
 const scrolls=()=>getComputedStyle(cv).touchAction!=='none';
@@ -456,13 +452,12 @@ if(!tw){try{cv.setPointerCapture(e.pointerId)}catch(_){}pb.auto=false;resetUntil
 if(tw&&ptr.size==1){st=[e.clientX,e.clientY];touchMode=null}
 if(ptr.size==2){pb.auto=false;resetUntil=0;pd=d2();pm=mid();st=null;touchMode=null}});
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p[0],dy=e.clientY-p[1];ptr.set(e.pointerId,[e.clientX,e.clientY]);
-if(e.pointerType==='touch'&&scrolls()){if(ptr.size==2){const n=d2(),m=mid();if(pd)zoomBy(pd/n);pd=n;if(pm){C.yaw-=(m[0]-pm[0])*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+(m[1]-pm[1])*.006))}pm=m}
+if(e.pointerType==='touch'&&scrolls()){if(ptr.size==2){const n=d2(),m=mid();if(pd>0&&n>0)zoomBy(pd/n);pd=n;if(pm){C.yaw-=(m[0]-pm[0])*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+(m[1]-pm[1])*.006))}pm=m}
 else if(ptr.size==1&&st){const tx=e.clientX-st[0],ty=e.clientY-st[1];if(!touchMode&&Math.hypot(tx,ty)>=6)touchMode=Math.abs(tx)>Math.abs(ty)?'rotate':'scroll';if(touchMode==='rotate'){C.yaw-=dx*.006;pb.auto=false;resetUntil=0}}return}
 if(ptr.size==1){C.yaw-=dx*.006;C.pitch=Math.min(1.4,Math.max(-1.4,C.pitch+dy*.006))}else if(ptr.size==2){const n=d2();if(pd)zoomBy(pd/n);pd=n}});
 ['pointerup','pointercancel'].forEach(k=>cv.addEventListener(k,e=>{ptr.delete(e.pointerId);pd=0;pm=null;if(ptr.size==1){st=[...ptr.values()][0];touchMode=null}else{st=null;touchMode=null}}));
-/* Scroll fix: a plain wheel/trackpad scroll over the 3D stage used to be swallowed (preventDefault) for zoom, so the page/panel appeared stuck. Now only Ctrl/⌘+wheel (and trackpad pinch, which reports ctrlKey) zooms; a plain wheel scrolls the side panel (or the page in the stacked mobile layout). Zoom buttons and touch pinch still work. */
-stage.addEventListener('wheel',e=>{if(e.target.closest&&e.target.closest('#dd'))return;if(e.ctrlKey||e.metaKey){e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89);return}
-const p=$('#panel');if(p&&p.scrollHeight>p.clientHeight&&getComputedStyle(p).overflowY!=='visible'){const t=p.scrollTop;p.scrollTop+=e.deltaY*(e.deltaMode==1?16:e.deltaMode==2?p.clientHeight:1);if(p.scrollTop!==t)e.preventDefault()}},{passive:false});
+/* Plain wheel and trackpad scrolling stay native; modifier-wheel remains camera zoom. */
+stage.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();pb.auto=false;zoomBy(e.deltaY>0?1.12:.89)}},{passive:false});
 $('#zi').onclick=()=>{pb.auto=false;zoomBy(.78)};$('#zo').onclick=()=>{pb.auto=false;zoomBy(1.28)};$('#rv').onclick=()=>{pb.auto=false;resetUntil=performance.now()+1400};
 /* ---- frame ---- */
 let T=0,TA=0,last=performance.now(),first=true,errs=0;
